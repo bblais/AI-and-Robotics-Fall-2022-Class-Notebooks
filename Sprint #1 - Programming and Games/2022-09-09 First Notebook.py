@@ -38,16 +38,109 @@ number_of_operations/rate /60/60/24/365
 # 
 # google Markdown syntax for a whole lot more
 
-# In[ ]:
+# In[8]:
 
 
+a=5
+5*a
 
 
-
-# In[ ]:
-
+# In[9]:
 
 
+bob=25
+
+
+# In[10]:
+
+
+a*Bob
+
+
+# In[11]:
+
+
+a*bob
+
+
+# In[12]:
+
+
+a
+
+
+# In[13]:
+
+
+a=a+2
+
+
+# In[14]:
+
+
+a
+
+
+# In[16]:
+
+
+print("here")
+for i in range(5):
+    print("there")
+    print(i)
+    
+print("somewhere")
+
+
+# In[21]:
+
+
+print("here")
+for bob in range(5):
+    print("there")
+    print(bob)
+
+print("hello")
+print("somewhere")
+
+
+# In[22]:
+
+
+print("here")
+for bob in range(5):
+    if bob>2:
+        print("there")
+    else:
+        print("another")
+        
+    print(bob)
+
+print("hello")
+print("somewhere")
+
+
+# In[23]:
+
+
+def do_something():
+    print("here")
+    for bob in range(5):
+        if bob>2:
+            print("there")
+        else:
+            print("another")
+
+        print(bob)
+
+    print("hello")
+    print("somewhere")    
+
+
+# In[24]:
+
+
+do_something()
 
 
 # In[ ]:
