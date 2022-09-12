@@ -99,6 +99,15 @@ def square(size):
     right(90)    
 
 
+# In[25]:
+
+
+def square(size):
+    for i in range(4):
+        forward(size)
+        right(90)
+
+
 # In[15]:
 
 
@@ -168,6 +177,103 @@ pendown()
 
 pencolor("red")
 house()
+
+
+# ## Functions!
+
+# In[35]:
+
+
+def square():
+    for i in range(4):
+        forward(50)
+        right(90)
+
+
+# In[36]:
+
+
+reset()
+square()
+
+
+# In[37]:
+
+
+def square_with_size(size):
+    print(size)
+    for i in range(4):
+        forward(size)
+        right(90)
+
+
+# In[38]:
+
+
+reset()
+square_with_size()
+
+
+# In[39]:
+
+
+reset()
+square_with_size(40)
+
+
+# In[45]:
+
+
+def square_with_color(size,color):
+
+    if color=="red":
+        pencolor("red")
+    elif color=="green":
+        pencolor("blue")
+    else:
+        pencolor("black")
+    
+    for i in range(4):
+        forward(size)
+        right(90)
+
+
+# In[46]:
+
+
+reset()
+square_with_color(40,"green")
+
+
+# In[47]:
+
+
+def square_with_color(size=40,color="black"):
+
+    if color=="red":
+        pencolor("red")
+    elif color=="green":
+        pencolor("blue")
+    else:
+        pencolor("black")
+    
+    for i in range(4):
+        forward(size)
+        right(90)
+
+
+# In[48]:
+
+
+reset()
+square_with_color(80,"green")
+
+
+# In[49]:
+
+
+reset()
+square_with_color()
 
 
 # In[ ]:
