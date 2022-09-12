@@ -85,7 +85,7 @@ forward(size)
 right(90)
 
 
-# In[12]:
+# In[14]:
 
 
 def square(size):
@@ -99,11 +99,75 @@ def square(size):
     right(90)    
 
 
-# In[13]:
+# In[15]:
 
 
 reset()
 square(40)
+
+
+# In[16]:
+
+
+def triangle():
+    left(56)
+    forward(50)
+    right(124)
+    forward(50)
+
+
+# In[17]:
+
+
+reset()
+square(40)
+triangle()
+
+
+# In[18]:
+
+
+def house():
+    square(40)
+    triangle()    
+
+
+# In[20]:
+
+
+reset()
+house()
+
+
+# In[21]:
+
+
+animate()
+
+
+# In[22]:
+
+
+reset()
+house()
+
+forward(50)
+
+house()
+
+
+# In[24]:
+
+
+reset()
+house()
+
+penup()
+forward(50)
+pendown()
+
+pencolor("red")
+house()
 
 
 # In[ ]:
