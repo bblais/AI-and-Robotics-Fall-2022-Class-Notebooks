@@ -3,7 +3,7 @@
 
 # ## Sprint #1
 
-# In[2]:
+# In[1]:
 
 
 get_ipython().system('pip install "git+https://github.com/bblais/Game" --upgrade')
