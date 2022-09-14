@@ -64,6 +64,61 @@ g.report()  # writes out percentage of wins, etc...
 from Game import *
 
 
+# In[2]:
+
+
+def initial_state():
+    return 21
+
+
+# In[6]:
+
+
+def valid_moves(state,player):
+    if state==1:
+        return [1]
+    elif state==2:
+        return [1,2]
+    else:
+        return [1,2,3]
+    
+
+
+# In[7]:
+
+
+valid_moves(21,1)
+
+
+# In[8]:
+
+
+valid_moves(2,1)
+
+
+# In[9]:
+
+
+def update_state(state,player,move):
+    
+    new_state=state-move
+    
+    
+    return new_state
+
+
+# In[10]:
+
+
+update_state(13,1,2)
+
+
+# In[11]:
+
+
+update_state(13,1,20)
+
+
 # In[ ]:
 
 
