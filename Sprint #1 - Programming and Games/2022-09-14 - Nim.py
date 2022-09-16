@@ -71,7 +71,7 @@ def initial_state():
     return 21
 
 
-# In[6]:
+# In[3]:
 
 
 def valid_moves(state,player):
@@ -84,39 +84,101 @@ def valid_moves(state,player):
     
 
 
-# In[7]:
+# In[4]:
 
 
 valid_moves(21,1)
 
 
-# In[8]:
+# In[5]:
 
 
 valid_moves(2,1)
 
 
-# In[9]:
+# In[6]:
 
 
 def update_state(state,player,move):
     
     new_state=state-move
     
-    
     return new_state
 
 
-# In[10]:
+# In[7]:
 
 
 update_state(13,1,2)
 
 
-# In[11]:
+# In[8]:
 
 
 update_state(13,1,20)
+
+
+# In[27]:
+
+
+def show_state(state):
+    number_of_sticks=state
+    print("The number of sticks is ",number_of_sticks)
+
+
+# In[28]:
+
+
+show_state(12)
+
+
+# In[29]:
+
+
+def win_status(state,player):
+
+    # the state here is the state after the player made the move
+    
+    # returns  - 'win'  if the state is a winning state for the player, 
+    #            'lose' if the state is a losing state for the player,
+    #            'stalemate' for a stalemate
+    #            None otherwise    
+    
+    
+    if state==1:
+        return "win"
+    
+    if state==0:
+        return "lose"
+    
+    
+
+
+# In[30]:
+
+
+def random_move(state,player):    
+    moves=valid_moves(state,player)
+    return random.choice(moves)
+ 
+random_agent=Agent(random_move)    
+
+
+# In[31]:
+
+
+def human_move(state,player):    
+    move=int(input("How many sticks to take?"))
+    return move
+ 
+human_agent=Agent(human_move)    
+
+
+# In[32]:
+
+
+g=Game()
+g.run(human_agent,random_agent)
 
 
 # In[ ]:
