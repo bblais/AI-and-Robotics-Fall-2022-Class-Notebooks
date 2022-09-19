@@ -24,6 +24,10 @@ def valid_moves(state,player):
     
     # nope -- return [0,1,2,3,4,5,6,7,8]
     
+    EMPTY=0
+    X=1
+    O=2
+    
     moves=[]
     
     if state[0]==0:
@@ -37,7 +41,7 @@ def valid_moves(state,player):
     
     moves=[]
     for location in range(9):
-        if state[location]==0:
+        if state[location]==EMPTY:
             moves.append(location)
     
     
@@ -128,7 +132,7 @@ def show_state(state):
             print()
 
 
-# In[27]:
+# In[28]:
 
 
 state=Board(3,3)
@@ -137,6 +141,12 @@ state[4]=1
 state[8]=1
 
 show_state(state)
+
+
+# In[29]:
+
+
+state.show_locations()
 
 
 # In[13]:
