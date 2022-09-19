@@ -5,7 +5,7 @@ class Turtle(object):
     def __init__(self):
         self.reset()
 
-    def reset(self,figsize=(10,10)):
+    def reset(self,figsize=(3,3)):
         self.x=0
         self.y=0
         self.angle=0

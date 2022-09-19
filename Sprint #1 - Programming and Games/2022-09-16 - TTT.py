@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[17]:
 
 
 from Game import *
 
 
-# In[3]:
+# In[18]:
 
 
 def initial_state():
@@ -17,7 +17,7 @@ def initial_state():
     return state
 
 
-# In[4]:
+# In[19]:
 
 
 def valid_moves(state,player):
@@ -44,7 +44,7 @@ def valid_moves(state,player):
     return moves
 
 
-# In[5]:
+# In[20]:
 
 
 state=Board(3,3)
@@ -53,7 +53,7 @@ print(state)
 valid_moves(state,1)
 
 
-# In[6]:
+# In[21]:
 
 
 def update_state(state,player,move):
@@ -65,7 +65,7 @@ def update_state(state,player,move):
     return new_state
 
 
-# In[7]:
+# In[26]:
 
 
 def three_in_a_row(a,b,c,player):
@@ -111,9 +111,47 @@ def win_status(state,player):
     
 def show_state(state):
     print(state)
+    
+    
+    
+def show_state(state):
+    
+    for i in range(9):
+        if state[i]==1:
+            print(" X ",end="")
+        elif state[i]==2: 
+            print(" O ",end="")
+        else:
+            print(" . ",end="")
+            
+        if i==2 or i==5:
+            print()
 
 
-# In[8]:
+# In[27]:
+
+
+state=Board(3,3)
+state[0]=1
+state[4]=1
+state[8]=1
+
+show_state(state)
+
+
+# In[13]:
+
+
+win_status(state,1)
+
+
+# In[16]:
+
+
+Board(3,3,3)
+
+
+# In[7]:
 
 
 def random_move(state,player):    
@@ -123,7 +161,7 @@ def random_move(state,player):
 random_agent=Agent(random_move)    
 
 
-# In[9]:
+# In[8]:
 
 
 def human_move(state,player):    
