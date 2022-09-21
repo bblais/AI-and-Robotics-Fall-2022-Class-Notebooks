@@ -67,7 +67,7 @@ def win_status(state,player):
     
 
 
-# In[30]:
+# In[7]:
 
 
 def random_move(state,player):    
@@ -77,12 +77,12 @@ def random_move(state,player):
 random_agent=Agent(random_move)    
 
 
-# In[31]:
+# In[9]:
 
 
 def human_move(state,player):
     
-    for i range(5):
+    for i in range(5):
         move=int(input("How many sticks to take?"))
 
         if move in valid_moves(state,player):
@@ -95,110 +95,58 @@ def human_move(state,player):
 human_agent=Agent(human_move)    
 
 
-# In[ ]:
+# In[10]:
 
 
+T=Table()
 
+state=3
+T[state]=Table()
 
+action=3
+T[state][action]=-1
 
-# In[ ]:
+action=2
+T[state][action]=1
 
+action=1
+T[state][action]=-1
 
 
+# In[11]:
 
 
-# In[ ]:
+T
 
 
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
+# In[12]:
 
 
 def make_nim_table():
     T=Table()
 
-    state=3
-    T[state]=Table()
-    
+    for state in range(1,25):
+        
+        T[state]=Table()
+        actions=valid_moves(state,1)
+        
+        for action in actions:
+            remaining=state-action
+            if (remaining-1)%4==0:
+                T[state][action]=1  # need to be smarter here
+            else:
+                T[state][action]=-1  # need to be smarter here
     
     return T
 
 
-# In[ ]:
+# In[13]:
+
+
+make_nim_table()
+
+
+# In[14]:
 
 
 def table_move(state,player):
@@ -215,11 +163,11 @@ table_agent=Agent(table_move)
 
 
 
-# In[32]:
+# In[16]:
 
 
 g=Game()
-g.run(human_agent,random_agent)
+g.run(table_agent,random_agent)
 
 
 # In[ ]:
