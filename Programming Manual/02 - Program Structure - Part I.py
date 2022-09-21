@@ -9,11 +9,11 @@
 # A very nice way to introduce program is using the `turtle` module. 
 # I make a custom version of this module, but it requires a few extra steps.
 
-# In[16]:
+# In[1]:
 
 
 # make all of the diagrams appear in the notebook, not in an external window
-get_ipython().run_line_magic('pylab', 'inline')
+get_ipython().run_line_magic('matplotlib', 'inline')
 from mplturtle import *
 
 
@@ -26,7 +26,7 @@ from mplturtle import *
 # 
 # 
 
-# In[9]:
+# In[2]:
 
 
 reset()  # this line is needed in every cell
@@ -48,7 +48,7 @@ animate()  # you can omit this line if you don't want to see the animation
 # the pen, moving over a little (without drawing), dropping the pen down,
 # and drawing another square.
 
-# In[10]:
+# In[3]:
 
 
 reset()  # this line is needed in every cell
@@ -320,7 +320,9 @@ right(90)
 forward(size)
 
 
-# > **Exercise:**  Write a program to ask the user for the size, and the x and y coordinates of the center of a circle, and draw it.
+# ::: callout
+# **Exercise:**  Write a program to ask the user for the size, and the x and y coordinates of the center of a circle, and draw it.
+# :::
 
 # 
 # 

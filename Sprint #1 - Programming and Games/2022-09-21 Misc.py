@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[3]:
 
 
 from Game import *
 
 
-# In[2]:
+# In[4]:
 
 
 state=Board(3,3)
@@ -42,6 +42,88 @@ state
 
 
 1 in state
+
+
+# In[5]:
+
+
+def valid_moves(state,player):
+    moves=[]
+
+    if player==1:
+        for value in [1,3,5,7,9]:
+            if not value in state:
+                for location in range(9):
+                    if state[location]==0:
+                        moves.append( [value,location])    
+    if player==2:
+        for value in [2,4,6,8]:
+            if not value in state:
+                for location in range(9):
+                    if state[location]==0:
+                        moves.append( [value,location])    
+                        
+                        
+    return moves
+
+
+# In[9]:
+
+
+state=Board(3,3)
+state[2]=3
+state[1]=4
+state[4]=5
+state[8]=2
+print(state)
+valid_moves(state,2)
+
+
+# In[10]:
+
+
+move=[6,5]
+
+
+# In[11]:
+
+
+value,location=move
+
+
+# In[12]:
+
+
+value
+
+
+# In[13]:
+
+
+location
+
+
+# In[17]:
+
+
+state[8]=6
+
+
+# In[18]:
+
+
+state
+
+
+# In[ ]:
+
+
+def update_state(state,player,move):
+    value,location=move
+    new_state=state
+
+    new_state[location]=value
+    return new_state
 
 
 # In[10]:
@@ -127,5 +209,14 @@ valid_moves(state,1)
 # In[ ]:
 
 
-
+def win_status(state,player):
+    
+    if (state[0] + state[1])==10:
+        return "win"
+    
+    if (state[2] + state[5])==10:
+        return "win"
+    
+    
+    
 

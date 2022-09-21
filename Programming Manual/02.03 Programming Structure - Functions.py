@@ -4,12 +4,13 @@
 # In[1]:
 
 
-# make all of the diagrams appear in the notebook, not in an external window
-get_ipython().run_line_magic('pylab', 'inline')
+#|echo: false
+#|output: false
+get_ipython().run_line_magic('matplotlib', 'inline')
 from mplturtle import *
 
 
-# ## Functions
+# # Functions
 # 
 # Functions are the basis of programming: all of the commands that you use
 # are functions. So, what is a function?
@@ -184,7 +185,7 @@ fun1(a,b)
 fun2(a,b)
 
 
-# ### Input and Output Arguments versus `input` and `print` Commands
+# ## Input and Output Arguments versus `input` and `print` Commands
 # 
 # Beginning programmers often get confused about the difference between
 # *displaying* a result and *returning* a result. For example, look at the
@@ -262,7 +263,7 @@ print(z)
 
 # so z is `None`, which isn't a number or anything.  When there is no `return` in a function, the function actually does return something -- it is called `None`.  Not particularly useful.
 
-# ### More Turtle Examples
+# ## More Turtle Examples
 # 
 # The easiest example of a use of a function is to bundle together a
 # number of commands into a convenient shortcut. Consider the following
@@ -340,17 +341,27 @@ for i in range(100):
         pencolor('blue')
 
 
-# > **Exercise**
-# > ![image.png](attachment:c1096326-c6c1-4095-93ce-f6376b821652.png)
+# ::: callout
+# **Exercise**
+# ![image.png](attachment:c1096326-c6c1-4095-93ce-f6376b821652.png)
+# :::
 
-# > **Exercise** ![image.png](attachment:f19657bb-dbf2-4768-8f9b-5d72b72cda5e.png)
+# ::: callout
+# **Exercise** ![image.png](attachment:f19657bb-dbf2-4768-8f9b-5d72b72cda5e.png)
+# :::
 
-# > **Exercise** ![image.png](attachment:3cc60315-3471-4574-8529-162cb8aaa465.png)
+# ::: callout
+# **Exercise** ![image.png](attachment:3cc60315-3471-4574-8529-162cb8aaa465.png)
+# :::
 
-# > **Exercise** ![image.png](attachment:e59f4c76-43ca-4951-b859-8a5ba6511188.png)
+# ::: callout
+# **Exercise** ![image.png](attachment:e59f4c76-43ca-4951-b859-8a5ba6511188.png)
+# :::
 
-# > **Exercise**  Make a function to draw a polygon. It should be given the number of sides, and the length of the
+# ::: callout
+# **Exercise**  Make a function to draw a polygon. It should be given the number of sides, and the length of the
 # shape.  For example, if the number of sides is, say, 3 then it should draw a triangle. If it’s 4 then a square, 5 a pentagon, etc...
+# :::
 # 
 
 # ### Local Variables

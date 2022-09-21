@@ -4,12 +4,13 @@
 # In[1]:
 
 
-# make all of the diagrams appear in the notebook, not in an external window
-get_ipython().run_line_magic('pylab', 'inline')
+#|echo: false
+#|output: false
+get_ipython().run_line_magic('matplotlib', 'inline')
 from mplturtle import *
 
 
-# ## Branching: If-statements
+# # Branching: If-statements
 # 
 # Programs execute one line at a time, in consecutive order. This
 # sequential program flow can be modified using two types of programing
@@ -83,7 +84,7 @@ print('y has the value ',y)
 # The values get swapped!
 # 
 
-# ### Comment on Boolean variables
+# ## Comment on Boolean variables
 # 
 # A boolean variable is one that has a value of true or false, instead of
 # a number. In Python those values are `True` and `False` (note the
@@ -122,7 +123,7 @@ print('y has the value ',y)
 # value for it to have any meaning.
 # 
 
-# ### Boolean Operators
+# ## Boolean Operators
 # 
 # The following are the allowed boolean operators.
 # 
@@ -185,7 +186,7 @@ print('y has the value ',y)
 # hours in debugging logic that is hard to see otherwise.
 # 
 
-# ### if, elif, and else
+# ## if, elif, and else
 # 
 # The if-statement has a more general structure which is very useful. It
 # looks like
@@ -229,4 +230,12 @@ else:
     print ('I did not understand what you wrote.')
 
 
-# > **Exercise** Make a turtle program to ask the user what shape to draw, and draw it. You should have at least 3 different shape choices.
+# ::: callout
+# **Exercise** Make a turtle program to ask the user what shape to draw, and draw it. You should have at least 3 different shape choices.
+# :::
+
+# In[ ]:
+
+
+
+

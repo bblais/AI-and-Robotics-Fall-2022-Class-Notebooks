@@ -148,10 +148,10 @@ def num2news(num):
 
 # The full source for the maze program is the following:
 
-# In[6]:
+# In[3]:
 
 
-get_ipython().run_line_magic('pylab', 'inline')
+get_ipython().run_line_magic('matplotlib', 'inline')
 from mplturtle import *
 import random
 
@@ -457,7 +457,7 @@ def maze(R=20,C=-1):
     return M
 
 
-# In[7]:
+# In[4]:
 
 
 R=30
@@ -469,7 +469,7 @@ M[-R]-=8   # exit
 draw_maze_text(M,R,C)
 
 
-# In[8]:
+# In[5]:
 
 
 draw_maze(M,R,C)

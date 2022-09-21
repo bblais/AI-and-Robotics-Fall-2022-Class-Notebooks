@@ -1,0 +1,36 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "Introduction to Programming in Python"
+  subtitle: "![testing image](images/snakes.png){width=70%}"
+  cover-image: images/cover.png
+  author: "Brian Blais"
+  sharing: [twitter, facebook, linkedin]
+  secnumdepth: 2
+  chapters:
+    - index.ipynb
+    - 01 - Introduction.ipynb
+    - part: 02 - Program Structure - Part I.ipynb
+      chapters: 
+        - 02.01 Programming Structure - If-Then Conditionals.ipynb
+        - 02.02 Programming Structure - Loops.ipynb
+        - 02.03 Programming Structure - Functions.ipynb
+    - part: 03.01 - Program Design - Guidelines.ipynb
+      chapters: 
+        - 03.02 Program Design - Tank Wars.ipynb
+    - part: 04.01 Program Structure - Part II.ipynb
+      chapters: 
+        - 04.02 Extended Tank Wars.ipynb
+        - 04.03 Program Structure - Maze.ipynb
+    - part: 05 More Features of Python.ipynb
+    
+
+format:
+  html: 
+    theme: cosmo
+    cover-image: cover.png
+    code-link: true
+
+

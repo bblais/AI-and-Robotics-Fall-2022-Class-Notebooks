@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# ## Tank Wars: An Extended Example
+# # Tank Wars: An Extended Example
 # 
 # As an example, I will step through the development and coding process
 # for a game of tank wars. The rules of the game are as follows:
@@ -16,7 +16,7 @@
 # - If a tank is destroyed, then that player loses. If both tanks are destroyed in the same turn, then it is a stalemate. 
 # - The wind speed is a constant set in the program, and displayed at the beginning of the game.
 # 
-# ### Writing the Recipe
+# ## Writing the Recipe
 # 
 # So how do we begin to write such a program? We first write a recipe for
 # the program, mostly in English. Something like:
@@ -50,7 +50,7 @@
 # to not continue repeating the while-loop.
 # 
 
-# ### Designing the Functions
+# ## Designing the Functions
 # 
 # The line Get Each Player's Angle and Speed should be a set of two
 # statements Get Player 1's Angle and Speed and Get Player 2's Angle and
@@ -311,7 +311,7 @@ get_winning_player(1011,990)
 get_winning_player(1010,990)
 
 
-# ### The Final Program
+# ## The Final Program
 # 
 # Adding a few display statements, and an if-statement to determine what
 # message to print, we have a complete program.  Notice that the functions and variables are named in such a way that the final program looks a lot like the recipe.
@@ -350,9 +350,13 @@ else:
     print('Stalemate.')
 
 
-# > **Exercise** Create the following computer game: The computer randomly selects an integer between 1 and 100. The user has to guess the number in the fewest number of tries. After each guess, the computer tells you whether the guess is too high or too low. At the end of the game print out the number of guesses it took. After each game, the user has the option of continuing with another game. **Make sure to write a recipe for the program before you write any Python code, and include it with your program.**
+# :::callout
+# **Exercise** Create the following computer game: The computer randomly selects an integer between 1 and 100. The user has to guess the number in the fewest number of tries. After each guess, the computer tells you whether the guess is too high or too low. At the end of the game print out the number of guesses it took. After each game, the user has the option of continuing with another game. **Make sure to write a recipe for the program before you write any Python code, and include it with your program.**
+# :::
 
-# > **Exercise** Make the same game, but this time have the human pick the number, and the computer guesses. The computer should need no more than 8 guesses to win.
+# :::callout
+# **Exercise** Make the same game, but this time have the human pick the number, and the computer guesses. The computer should need no more than 8 guesses to win.
+# :::
 
 # In[ ]:
 

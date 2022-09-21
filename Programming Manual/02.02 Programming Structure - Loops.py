@@ -4,12 +4,13 @@
 # In[1]:
 
 
-# make all of the diagrams appear in the notebook, not in an external window
-get_ipython().run_line_magic('pylab', 'inline')
+#|echo: false
+#|output: false
+get_ipython().run_line_magic('matplotlib', 'inline')
 from mplturtle import *
 
 
-# ## Loops 
+# # Loops 
 # 
 # A loop is used to repeat a set of statements many times, usually until
 # some condition is met. One loop structure we will introduce now is the
@@ -136,7 +137,7 @@ while principal<0:
 # positive (or zero) principal.
 # 
 
-# ### The `for`-loop
+# ## The `for`-loop
 # 
 # Ninety percent of loops one writes, repeat a specified number of times,
 # like the first example above, which repeats 5 times. Because of this,
