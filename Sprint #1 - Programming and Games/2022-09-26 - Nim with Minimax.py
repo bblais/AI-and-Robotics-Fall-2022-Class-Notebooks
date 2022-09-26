@@ -128,11 +128,11 @@ values,moves=minimax_values(100000,1,display=True)  # need a heuristic function 
 values,moves
 
 
-# In[32]:
+# In[18]:
 
 
 g=Game()
-g.run(human_agent,random_agent)
+g.run(human_agent,minimax_agent)
 
 
 # In[ ]:
