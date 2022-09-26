@@ -7,6 +7,8 @@
 from Game import *
 
 
+# ## Game functions
+
 # In[2]:
 
 
@@ -67,6 +69,8 @@ def win_status(state,player):
     
 
 
+# ## Agents
+
 # In[7]:
 
 
@@ -100,6 +104,8 @@ def minimax_move(state,player):
 minimax_agent=Agent(minimax_move)
 
 
+# ### some debugging
+
 # In[10]:
 
 
@@ -127,6 +133,8 @@ values,moves
 values,moves=minimax_values(100000,1,display=True)  # need a heuristic function to deal with recursion
 values,moves
 
+
+# ## Running the Game
 
 # In[18]:
 
