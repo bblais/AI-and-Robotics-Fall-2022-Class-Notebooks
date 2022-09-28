@@ -130,10 +130,10 @@ minimax_agent=Agent(minimax_move)
 
 # ### Long Game
 
-# In[13]:
+# In[16]:
 
 
-values,moves=minimax_values(6,1,display=True)
+values,moves=minimax_values(200,1,display=True)
 values,moves
 
 

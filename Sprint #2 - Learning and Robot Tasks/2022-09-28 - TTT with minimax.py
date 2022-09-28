@@ -48,7 +48,7 @@ def valid_moves(state,player):
     return moves
 
 
-# In[5]:
+# In[4]:
 
 
 def update_state(state,player,move):
@@ -60,7 +60,7 @@ def update_state(state,player,move):
     return new_state
 
 
-# In[6]:
+# In[5]:
 
 
 def three_in_a_row(a,b,c,player):
@@ -123,7 +123,7 @@ def show_state(state):
             print()
 
 
-# In[10]:
+# In[6]:
 
 
 def random_move(state,player):    
@@ -133,7 +133,7 @@ def random_move(state,player):
 random_agent=Agent(random_move)    
 
 
-# In[11]:
+# In[7]:
 
 
 def human_move(state,player):    
@@ -148,7 +148,7 @@ def human_move(state,player):
 human_agent=Agent(human_move)    
 
 
-# In[12]:
+# In[10]:
 
 
 from Game.minimax import *
@@ -162,27 +162,52 @@ def heuristic(state,player):
     # positive = good for the player
     # negative = bad for player
     
-    if state%2==0:   # even state
-        return 0.3
-    else:  # odd state
-        return -0.3
+    return 0
+
+# material advantage
+def heuristic(state,player):
+    # returns between -1 and 1 (not inclusive)
+    # approximate value of a state
+    # positive = good for the player
+    # negative = bad for player
     
+    # count up my pieces, count up their pieces
+    N_player=count_pieces(state,player)
+    N_other=count_pieces(state,other_player)
+    
+    return (N_player-N_other)/(N_player+N_other)
+    
+    
+    
+    return 0
+
+
+
+
 minimax_agent=Agent(minimax_move)
 
 
-# In[14]:
+# In[9]:
 
 
 g=Game()
 g.run(minimax_agent,random_agent)
 
 
-# In[16]:
+# In[18]:
 
 
 state=initial_state()
 state[0]=1
 state[1]=2
+values,moves=minimax_values(state,1,display=True)
+values,moves
+
+
+# In[17]:
+
+
+state=initial_state()
 values,moves=minimax_values(state,1,display=True)
 values,moves
 
