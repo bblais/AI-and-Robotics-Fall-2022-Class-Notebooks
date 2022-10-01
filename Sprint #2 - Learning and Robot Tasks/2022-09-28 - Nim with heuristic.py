@@ -106,12 +106,12 @@ minimax_agent=Agent(minimax_move)
 
 # Fix for long games
 
-# In[12]:
+# In[17]:
 
 
 from Game.minimax import *
 def minimax_move(state,player):
-    values,moves=minimax_values(state,player,maxdepth=5,display=True)
+    values,moves=minimax_values(state,player,maxdepth=1,display=True)
     return top_choice(moves,values)
     
 def heuristic(state,player):
@@ -130,17 +130,17 @@ minimax_agent=Agent(minimax_move)
 
 # ### Long Game
 
-# In[16]:
+# In[18]:
 
 
 values,moves=minimax_values(200,1,display=True)
 values,moves
 
 
-# In[15]:
+# In[22]:
 
 
-values,moves=minimax_values(100000,1,maxdepth=5,display=True)  # need a heuristic function to deal with recursion
+values,moves=minimax_values(100000,1,maxdepth=-1,display=True)  # need a heuristic function to deal with recursion
 values,moves
 
 

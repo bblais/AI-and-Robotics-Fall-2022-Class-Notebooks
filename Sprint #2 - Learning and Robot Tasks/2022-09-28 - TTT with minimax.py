@@ -148,7 +148,7 @@ def human_move(state,player):
 human_agent=Agent(human_move)    
 
 
-# In[10]:
+# In[11]:
 
 
 from Game.minimax import *

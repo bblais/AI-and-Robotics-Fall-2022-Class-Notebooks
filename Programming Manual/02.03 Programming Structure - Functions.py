@@ -341,25 +341,29 @@ for i in range(100):
         pencolor('blue')
 
 
-# ::: callout
-# **Exercise**
-# ![image.png](attachment:c1096326-c6c1-4095-93ce-f6376b821652.png)
+# ::: {.callout-tip}
+# ## Exercise
+# ![Multiple Houses](attachment:c1096326-c6c1-4095-93ce-f6376b821652.png)
 # :::
 
-# ::: callout
-# **Exercise** ![image.png](attachment:f19657bb-dbf2-4768-8f9b-5d72b72cda5e.png)
+# ::: {.callout-tip}
+# ## Exercise
+# ![Circles and Squares](attachment:f19657bb-dbf2-4768-8f9b-5d72b72cda5e.png)
 # :::
 
-# ::: callout
-# **Exercise** ![image.png](attachment:3cc60315-3471-4574-8529-162cb8aaa465.png)
+# ::: {.callout-tip}
+# ## Exercise
+# ![Out and Back and Angles](attachment:3cc60315-3471-4574-8529-162cb8aaa465.png)
 # :::
 
-# ::: callout
-# **Exercise** ![image.png](attachment:e59f4c76-43ca-4951-b859-8a5ba6511188.png)
+# ::: {.callout-tip}
+# ## Exercise
+# ![Looping patterns](attachment:e59f4c76-43ca-4951-b859-8a5ba6511188.png)
 # :::
 
-# ::: callout
-# **Exercise**  Make a function to draw a polygon. It should be given the number of sides, and the length of the
+# ::: {.callout-tip}
+# ## Exercise
+# Make a function to draw a polygon. It should be given the number of sides, and the length of the
 # shape.  For example, if the number of sides is, say, 3 then it should draw a triangle. If it’s 4 then a square, 5 a pentagon, etc...
 # :::
 # 

@@ -230,8 +230,9 @@ else:
     print ('I did not understand what you wrote.')
 
 
-# ::: callout
-# **Exercise** Make a turtle program to ask the user what shape to draw, and draw it. You should have at least 3 different shape choices.
+# ::: {.callout-tip}
+# ## Exercise
+# Make a turtle program to ask the user what shape to draw, and draw it. You should have at least 3 different shape choices.
 # :::
 
 # In[ ]:

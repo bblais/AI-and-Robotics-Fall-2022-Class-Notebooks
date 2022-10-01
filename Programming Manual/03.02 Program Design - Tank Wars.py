@@ -350,12 +350,14 @@ else:
     print('Stalemate.')
 
 
-# :::callout
-# **Exercise** Create the following computer game: The computer randomly selects an integer between 1 and 100. The user has to guess the number in the fewest number of tries. After each guess, the computer tells you whether the guess is too high or too low. At the end of the game print out the number of guesses it took. After each game, the user has the option of continuing with another game. **Make sure to write a recipe for the program before you write any Python code, and include it with your program.**
+# ::: {.callout-tip}
+# ## Exercise
+# Create the following computer game: The computer randomly selects an integer between 1 and 100. The user has to guess the number in the fewest number of tries. After each guess, the computer tells you whether the guess is too high or too low. At the end of the game print out the number of guesses it took. After each game, the user has the option of continuing with another game. **Make sure to write a recipe for the program before you write any Python code, and include it with your program.**
 # :::
 
-# :::callout
-# **Exercise** Make the same game, but this time have the human pick the number, and the computer guesses. The computer should need no more than 8 guesses to win.
+# ::: {.callout-tip}
+# ## Exercise
+# Make the same game, but this time have the human pick the number, and the computer guesses. The computer should need no more than 8 guesses to win.
 # :::
 
 # In[ ]:

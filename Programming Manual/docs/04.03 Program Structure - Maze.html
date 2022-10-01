@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Introduction to Programming in Python - 7&nbsp; Extended Example: Maze</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./05 More Features of Python.html" rel="next">
+<link href="./04.02 Extended Tank Wars.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Extended Example: Maze</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Introduction to Programming in Python</a> 
+        <div class="sidebar-tools-main">
+    <a href="" title="Share" id="sidebar-tool-dropdown-0" class="sidebar-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-share"></i></a>
+    <ul class="dropdown-menu" aria-labelledby="sidebar-tool-dropdown-0">
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+            <i class="bi bi-bi-twitter pe-1"></i>
+          Twitter
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+            <i class="bi bi-bi-facebook pe-1"></i>
+          Facebook
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+            <i class="bi bi-bi-linkedin pe-1"></i>
+          LinkedIn
+          </a>
+        </li>
+    </ul>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Acknowledgments</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01 - Introduction.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./02 - Program Structure - Part I.html" class="sidebar-item-text sidebar-link">Program Structure - Part I</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02.01 Programming Structure - If-Then Conditionals.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Branching: If-statements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02.02 Programming Structure - Loops.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Loops</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02.03 Programming Structure - Functions.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Functions</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./03.01 - Program Design - Guidelines.html" class="sidebar-item-text sidebar-link">Program Design</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03.02 Program Design - Tank Wars.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Tank Wars: An Extended Example</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./04.01 Program Structure - Part II.html" class="sidebar-item-text sidebar-link">Program Structure - Part II</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04.02 Extended Tank Wars.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Extended Example: Tank Wars with N Players</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04.03 Program Structure - Maze.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Extended Example: Maze</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">More Features of Python</span>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Extended Example: Maze</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<p>In this section we write a program to generate a random maze. We will use Aldous-Broder’s algorithm, which goes as follows:</p>
+<blockquote class="blockquote">
+<p>Start with a maze grid with all walls up (a bunch of individual, walled cells). Pick a point, and move to a neighboring cell at random. If the new cell has all of its walls still up, then knock the walls down between the previous cell and the new cell. Keep moving to neighboring cells until all cells have been visited.</p>
+</blockquote>
+<p>We will start with the recipe, and then break each piece down into pieces.</p>
+<ul>
+<li>Make Maze</li>
+<li>Draw Maze</li>
+</ul>
+<p>then we expand those pieces</p>
+<ul>
+<li>Make Maze
+<ul>
+<li>Initialize Maze</li>
+<li>Pick a point</li>
+<li>Move to a neighboring cell at random</li>
+<li>If the new cell has all of its walls still up…
+<ul>
+<li>Knock the walls down between the previous cell and the new cell</li>
+</ul></li>
+<li>Keep moving to neighboring cells until all cells have been visited. → this turns into a while loop</li>
+</ul></li>
+<li>Draw Maze
+<ul>
+<li>For all of the rows…
+<ul>
+<li>Draw one row of the maze</li>
+</ul></li>
+</ul></li>
+</ul>
+<p>then we structure the while-loop</p>
+<ul>
+<li>Make Maze
+<ul>
+<li>Initialize Maze</li>
+<li>Pick a cell</li>
+<li>Count this cell as visited</li>
+<li>While we still have cells to visit…
+<ul>
+<li>Move to a neighboring cell at random</li>
+<li>If the new cell has all of its walls still up…</li>
+</ul></li>
+<li>Knock the walls down between the previous cell and the new cell - Count this new cell as visited</li>
+</ul></li>
+<li>Draw Maze
+<ul>
+<li>For all of the rows…
+<ul>
+<li>Draw one row of the maze</li>
+</ul></li>
+</ul></li>
+</ul>
+<p>At this point we have to make some decisions about how to represent the maze itself. Pretty much we need to have a number of rows and columns for the maze, and know which walls are up for the particular cell. For example, say we have the following 3x3 maze, and a summary of the information to describe this maze:</p>
+<pre><code>                   +--+--+--+
+                   |        |
+                   +--+  +--+
+                   |        |
+                   +--+  +  +
+                   |     |  |
+                   +--+--+--+</code></pre>
+<p>The information in this maze is the following (recall that Python lists index starting from 0 not 1, so rows and columns are numbered from 0):</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Index</th>
+<th>Row</th>
+<th>Column</th>
+<th>N</th>
+<th>E</th>
+<th>W</th>
+<th>S</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>y</td>
+<td>n</td>
+<td>y</td>
+<td>y</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>y</td>
+<td>n</td>
+<td>y</td>
+<td>y</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>2</td>
+<td>0</td>
+<td>y</td>
+<td>n</td>
+<td>y</td>
+<td>y</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>0</td>
+<td>1</td>
+<td>y</td>
+<td>n</td>
+<td>n</td>
+<td>n</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>1</td>
+<td>1</td>
+<td>n</td>
+<td>n</td>
+<td>n</td>
+<td>n</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>2</td>
+<td>1</td>
+<td>n</td>
+<td>y</td>
+<td>n</td>
+<td>y</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td>0</td>
+<td>2</td>
+<td>y</td>
+<td>y</td>
+<td>n</td>
+<td>y</td>
+</tr>
+<tr class="even">
+<td>7</td>
+<td>1</td>
+<td>2</td>
+<td>y</td>
+<td>y</td>
+<td>n</td>
+<td>n</td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td>2</td>
+<td>2</td>
+<td>n</td>
+<td>y</td>
+<td>y</td>
+<td>y</td>
+</tr>
+</tbody>
+</table>
+<p>We could have 4 separate lists (or lists of lists, to get 2-D structure) representing north, south, east, and west walls, or we can be a bit more clever and do it in one. If we assign the following values:</p>
+<pre><code>M =
+
+  11   8  13
+  11   0  12
+  11   5   7</code></pre>
+<p>Here I have set the following values:</p>
+<p><span class="math display">\[N=8\]</span></p>
+<p><span class="math display">\[E=4\]</span></p>
+<p><span class="math display">\[W=2\]</span></p>
+<p><span class="math display">\[S=1\]</span></p>
+<p>and simply added them up. In that way, all of the possible combinations of walls are specified by a single number from 0 (no walls) to 15 (all walls = 8+4+2+1). We will want a conversion between this number format to a length 4 list specifying the walls in North, East, West, and South directions (I’ll refer to this length-4 list format as the NEWS format). To go from NEWS format to number format we just simply add up the values of <span class="math inline">\(N\)</span>, <span class="math inline">\(E\)</span>, <span class="math inline">\(W\)</span>, and <span class="math inline">\(S\)</span> for every element of the NEWS list which is 1.</p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> news2num(NEWS):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># convert a north,east,west,south list to a single number wall value</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    North<span class="op">=</span><span class="dv">8</span><span class="op">;</span> East<span class="op">=</span><span class="dv">4</span><span class="op">;</span> West<span class="op">=</span><span class="dv">2</span><span class="op">;</span> South<span class="op">=</span><span class="dv">1</span><span class="op">;</span> </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    num<span class="op">=</span>NEWS[<span class="dv">0</span>]<span class="op">*</span>North<span class="op">+</span>NEWS[<span class="dv">1</span>]<span class="op">*</span>East<span class="op">+</span>NEWS[<span class="dv">2</span>]<span class="op">*</span>West<span class="op">+</span>NEWS[<span class="dv">3</span>]<span class="op">*</span>South<span class="op">;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> num</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>To go the other way we can do</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> num2news(num):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># convert single number wall values to a north,east,west,south list</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    North<span class="op">=</span><span class="dv">8</span><span class="op">;</span> East<span class="op">=</span><span class="dv">4</span><span class="op">;</span> West<span class="op">=</span><span class="dv">2</span><span class="op">;</span> South<span class="op">=</span><span class="dv">1</span><span class="op">;</span> </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    NEWS<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>]</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (num<span class="op">&gt;=</span><span class="dv">8</span>): <span class="co"># North</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        NEWS[<span class="dv">0</span>]<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        num<span class="op">=</span>num<span class="op">-</span><span class="dv">8</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (num<span class="op">&gt;=</span><span class="dv">4</span>): <span class="co"># East</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        NEWS[<span class="dv">1</span>]<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        num<span class="op">=</span>num<span class="op">-</span><span class="dv">4</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (num<span class="op">&gt;=</span><span class="dv">2</span>): <span class="co"># West</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        NEWS[<span class="dv">2</span>]<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>        num<span class="op">=</span>num<span class="op">-</span><span class="dv">2</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (num<span class="op">&gt;=</span><span class="dv">1</span>): <span class="co"># South</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>        NEWS[<span class="dv">3</span>]<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>        num<span class="op">=</span>num<span class="op">-</span><span class="dv">1</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> NEWS</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>More to do here</strong></p>
+<p>The full source for the maze program is the following:</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mplturtle <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> num2news(num):</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># convert single number wall values to a north,east,west,south list</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    North<span class="op">=</span><span class="dv">8</span><span class="op">;</span> East<span class="op">=</span><span class="dv">4</span><span class="op">;</span> West<span class="op">=</span><span class="dv">2</span><span class="op">;</span> South<span class="op">=</span><span class="dv">1</span><span class="op">;</span> </span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    NEWS<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>]</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (num<span class="op">&gt;=</span><span class="dv">8</span>): <span class="co"># North</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>        NEWS[<span class="dv">0</span>]<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>        num<span class="op">=</span>num<span class="op">-</span><span class="dv">8</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (num<span class="op">&gt;=</span><span class="dv">4</span>): <span class="co"># East</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>        NEWS[<span class="dv">1</span>]<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>        num<span class="op">=</span>num<span class="op">-</span><span class="dv">4</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (num<span class="op">&gt;=</span><span class="dv">2</span>): <span class="co"># West</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>        NEWS[<span class="dv">2</span>]<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>        num<span class="op">=</span>num<span class="op">-</span><span class="dv">2</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (num<span class="op">&gt;=</span><span class="dv">1</span>): <span class="co"># South</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>        NEWS[<span class="dv">3</span>]<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>        num<span class="op">=</span>num<span class="op">-</span><span class="dv">1</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> NEWS</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> news2num(NEWS):</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    <span class="co"># convert a north,east,west,south list to a single number wall value</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    North<span class="op">=</span><span class="dv">8</span><span class="op">;</span> East<span class="op">=</span><span class="dv">4</span><span class="op">;</span> West<span class="op">=</span><span class="dv">2</span><span class="op">;</span> South<span class="op">=</span><span class="dv">1</span><span class="op">;</span> </span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>    num<span class="op">=</span>NEWS[<span class="dv">0</span>]<span class="op">*</span>North<span class="op">+</span>NEWS[<span class="dv">1</span>]<span class="op">*</span>East<span class="op">+</span>NEWS[<span class="dv">2</span>]<span class="op">*</span>West<span class="op">+</span>NEWS[<span class="dv">3</span>]<span class="op">*</span>South<span class="op">;</span></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> num</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> idx2rc(idx,M,R,C):</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>    <span class="co"># convert from index representation to row and column</span></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>    r<span class="op">=</span>[i<span class="op">%</span>R <span class="cf">for</span> i <span class="kw">in</span> idx]</span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>    c<span class="op">=</span>[i<span class="op">//</span>R <span class="cf">for</span> i <span class="kw">in</span> idx]</span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> r,c</span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> rc2idx(rv,cv,M,R,C):</span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>    <span class="co">#convert from row and column representation to an index</span></span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>    idx<span class="op">=</span>[]</span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> r,c <span class="kw">in</span> <span class="bu">zip</span>(rv,cv):</span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>        idx.append(r<span class="op">+</span>c<span class="op">*</span>R)</span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> idx</span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_direction(idx1,idx2,M,R,C):</span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Given two neighboring indices, returns both the direction from first</span></span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>    <span class="co"># to the second and the second to the first </span></span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a>    North<span class="op">=</span><span class="dv">8</span><span class="op">;</span> East<span class="op">=</span><span class="dv">4</span><span class="op">;</span> West<span class="op">=</span><span class="dv">2</span><span class="op">;</span> South<span class="op">=</span><span class="dv">1</span><span class="op">;</span> </span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a>    r1,c1<span class="op">=</span>idx2rc(idx1,M,R,C)</span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a>    r1<span class="op">=</span>r1[<span class="dv">0</span>]</span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>    c1<span class="op">=</span>c1[<span class="dv">0</span>]</span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a>    r2,c2<span class="op">=</span>idx2rc(idx2,M,R,C)</span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a>    r2<span class="op">=</span>r2[<span class="dv">0</span>]</span>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a>    c2<span class="op">=</span>c2[<span class="dv">0</span>]</span>
+<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>  ((r1<span class="op">-</span>r2)<span class="op">==</span><span class="dv">0</span>) <span class="kw">and</span> ((c1<span class="op">-</span>c2)<span class="op">==</span><span class="dv">1</span>):   <span class="co"># c1 to the right</span></span>
+<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a>        dir1<span class="op">=</span>West </span>
+<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a>        dir2<span class="op">=</span>East</span>
+<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> ((r1<span class="op">-</span>r2)<span class="op">==</span><span class="dv">0</span>) <span class="kw">and</span> ((c1<span class="op">-</span>c2)<span class="op">==-</span><span class="dv">1</span>): <span class="co"># c1 to the left</span></span>
+<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a>        dir1<span class="op">=</span>East </span>
+<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a>        dir2<span class="op">=</span>West</span>
+<span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> ((r1<span class="op">-</span>r2)<span class="op">==</span><span class="dv">1</span>) <span class="kw">and</span> ((c1<span class="op">-</span>c2)<span class="op">==</span><span class="dv">0</span>):  <span class="co"># r1 below</span></span>
+<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a>        dir1<span class="op">=</span>North</span>
+<span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a>        dir2<span class="op">=</span>South</span>
+<span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> ((r1<span class="op">-</span>r2)<span class="op">==-</span><span class="dv">1</span>) <span class="op">&amp;</span> ((c1<span class="op">-</span>c2)<span class="op">==</span><span class="dv">0</span>):    <span class="co"># r1 above</span></span>
+<span id="cb5-82"><a href="#cb5-82" aria-hidden="true" tabindex="-1"></a>        dir1<span class="op">=</span>South </span>
+<span id="cb5-83"><a href="#cb5-83" aria-hidden="true" tabindex="-1"></a>        dir2<span class="op">=</span>North</span>
+<span id="cb5-84"><a href="#cb5-84" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb5-85"><a href="#cb5-85" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">'Invalid neighboring indices'</span>)</span>
+<span id="cb5-86"><a href="#cb5-86" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-87"><a href="#cb5-87" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> dir1,dir2</span>
+<span id="cb5-88"><a href="#cb5-88" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-89"><a href="#cb5-89" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> neighbors(idx,M,R,C):</span>
+<span id="cb5-90"><a href="#cb5-90" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-91"><a href="#cb5-91" aria-hidden="true" tabindex="-1"></a>    <span class="co"># convert the index to row and column</span></span>
+<span id="cb5-92"><a href="#cb5-92" aria-hidden="true" tabindex="-1"></a>    r,c<span class="op">=</span>idx2rc(idx,M,R,C)</span>
+<span id="cb5-93"><a href="#cb5-93" aria-hidden="true" tabindex="-1"></a>    r<span class="op">=</span>r[<span class="dv">0</span>]</span>
+<span id="cb5-94"><a href="#cb5-94" aria-hidden="true" tabindex="-1"></a>    c<span class="op">=</span>c[<span class="dv">0</span>]</span>
+<span id="cb5-95"><a href="#cb5-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-96"><a href="#cb5-96" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-97"><a href="#cb5-97" aria-hidden="true" tabindex="-1"></a>    <span class="co"># get the neighboring row and column values</span></span>
+<span id="cb5-98"><a href="#cb5-98" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-99"><a href="#cb5-99" aria-hidden="true" tabindex="-1"></a>    rd<span class="op">=</span>[v<span class="op">+</span>r <span class="cf">for</span> v <span class="kw">in</span> [<span class="op">-</span><span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>]]</span>
+<span id="cb5-100"><a href="#cb5-100" aria-hidden="true" tabindex="-1"></a>    cd<span class="op">=</span>[v<span class="op">+</span>c <span class="cf">for</span> v <span class="kw">in</span> [<span class="dv">0</span>,<span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,<span class="dv">0</span>]]</span>
+<span id="cb5-101"><a href="#cb5-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-102"><a href="#cb5-102" aria-hidden="true" tabindex="-1"></a>    <span class="co"># find the valid ones</span></span>
+<span id="cb5-103"><a href="#cb5-103" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-104"><a href="#cb5-104" aria-hidden="true" tabindex="-1"></a>    rdv<span class="op">=</span>[]</span>
+<span id="cb5-105"><a href="#cb5-105" aria-hidden="true" tabindex="-1"></a>    cdv<span class="op">=</span>[]</span>
+<span id="cb5-106"><a href="#cb5-106" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">4</span>):</span>
+<span id="cb5-107"><a href="#cb5-107" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (rd[i]<span class="op">&gt;=</span><span class="dv">0</span>) <span class="kw">and</span> (rd[i]<span class="op">&lt;</span>R) <span class="kw">and</span> (cd[i]<span class="op">&gt;=</span><span class="dv">0</span>) <span class="kw">and</span> (cd[i]<span class="op">&lt;</span>C):</span>
+<span id="cb5-108"><a href="#cb5-108" aria-hidden="true" tabindex="-1"></a>            rdv.append(rd[i])</span>
+<span id="cb5-109"><a href="#cb5-109" aria-hidden="true" tabindex="-1"></a>            cdv.append(cd[i])</span>
+<span id="cb5-110"><a href="#cb5-110" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb5-111"><a href="#cb5-111" aria-hidden="true" tabindex="-1"></a>    <span class="co"># convert back to an index</span></span>
+<span id="cb5-112"><a href="#cb5-112" aria-hidden="true" tabindex="-1"></a>    idx_neighbor<span class="op">=</span>rc2idx(rdv,cdv,M,R,C)</span>
+<span id="cb5-113"><a href="#cb5-113" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-114"><a href="#cb5-114" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> idx_neighbor</span>
+<span id="cb5-115"><a href="#cb5-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-116"><a href="#cb5-116" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> draw_row(row,sz):</span>
+<span id="cb5-117"><a href="#cb5-117" aria-hidden="true" tabindex="-1"></a>    NEWS<span class="op">=</span>num2news(row[<span class="dv">0</span>])</span>
+<span id="cb5-118"><a href="#cb5-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-119"><a href="#cb5-119" aria-hidden="true" tabindex="-1"></a>    <span class="co">#turtle starts in upper left, facing right</span></span>
+<span id="cb5-120"><a href="#cb5-120" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> NEWS[<span class="dv">2</span>]:  <span class="co">#left-most wall</span></span>
+<span id="cb5-121"><a href="#cb5-121" aria-hidden="true" tabindex="-1"></a>        right(<span class="dv">90</span>)</span>
+<span id="cb5-122"><a href="#cb5-122" aria-hidden="true" tabindex="-1"></a>        pendown()</span>
+<span id="cb5-123"><a href="#cb5-123" aria-hidden="true" tabindex="-1"></a>        forward(sz)</span>
+<span id="cb5-124"><a href="#cb5-124" aria-hidden="true" tabindex="-1"></a>        backward(sz)</span>
+<span id="cb5-125"><a href="#cb5-125" aria-hidden="true" tabindex="-1"></a>        left(<span class="dv">90</span>)</span>
+<span id="cb5-126"><a href="#cb5-126" aria-hidden="true" tabindex="-1"></a>        penup()</span>
+<span id="cb5-127"><a href="#cb5-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-128"><a href="#cb5-128" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> v <span class="kw">in</span> row:</span>
+<span id="cb5-129"><a href="#cb5-129" aria-hidden="true" tabindex="-1"></a>        NEWS<span class="op">=</span>num2news(v)</span>
+<span id="cb5-130"><a href="#cb5-130" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb5-131"><a href="#cb5-131" aria-hidden="true" tabindex="-1"></a>        <span class="co"># I only care about the east wall and south walls</span></span>
+<span id="cb5-132"><a href="#cb5-132" aria-hidden="true" tabindex="-1"></a>        <span class="co"># east</span></span>
+<span id="cb5-133"><a href="#cb5-133" aria-hidden="true" tabindex="-1"></a>        penup()</span>
+<span id="cb5-134"><a href="#cb5-134" aria-hidden="true" tabindex="-1"></a>        forward(sz)</span>
+<span id="cb5-135"><a href="#cb5-135" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb5-136"><a href="#cb5-136" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> NEWS[<span class="dv">1</span>]: <span class="co"># east wall</span></span>
+<span id="cb5-137"><a href="#cb5-137" aria-hidden="true" tabindex="-1"></a>            right(<span class="dv">90</span>)</span>
+<span id="cb5-138"><a href="#cb5-138" aria-hidden="true" tabindex="-1"></a>            pendown()</span>
+<span id="cb5-139"><a href="#cb5-139" aria-hidden="true" tabindex="-1"></a>            forward(sz)</span>
+<span id="cb5-140"><a href="#cb5-140" aria-hidden="true" tabindex="-1"></a>            backward(sz)</span>
+<span id="cb5-141"><a href="#cb5-141" aria-hidden="true" tabindex="-1"></a>            left(<span class="dv">90</span>)</span>
+<span id="cb5-142"><a href="#cb5-142" aria-hidden="true" tabindex="-1"></a>            penup()</span>
+<span id="cb5-143"><a href="#cb5-143" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb5-144"><a href="#cb5-144" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> NEWS[<span class="dv">3</span>]: <span class="co"># south wall</span></span>
+<span id="cb5-145"><a href="#cb5-145" aria-hidden="true" tabindex="-1"></a>            right(<span class="dv">90</span>)</span>
+<span id="cb5-146"><a href="#cb5-146" aria-hidden="true" tabindex="-1"></a>            forward(sz)</span>
+<span id="cb5-147"><a href="#cb5-147" aria-hidden="true" tabindex="-1"></a>            right(<span class="dv">90</span>)</span>
+<span id="cb5-148"><a href="#cb5-148" aria-hidden="true" tabindex="-1"></a>            pendown()</span>
+<span id="cb5-149"><a href="#cb5-149" aria-hidden="true" tabindex="-1"></a>            forward(sz)</span>
+<span id="cb5-150"><a href="#cb5-150" aria-hidden="true" tabindex="-1"></a>            backward(sz)</span>
+<span id="cb5-151"><a href="#cb5-151" aria-hidden="true" tabindex="-1"></a>            left(<span class="dv">90</span>)</span>
+<span id="cb5-152"><a href="#cb5-152" aria-hidden="true" tabindex="-1"></a>            penup()</span>
+<span id="cb5-153"><a href="#cb5-153" aria-hidden="true" tabindex="-1"></a>            backward(sz)</span>
+<span id="cb5-154"><a href="#cb5-154" aria-hidden="true" tabindex="-1"></a>            left(<span class="dv">90</span>)</span>
+<span id="cb5-155"><a href="#cb5-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-156"><a href="#cb5-156" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> draw_row_text(row):</span>
+<span id="cb5-157"><a href="#cb5-157" aria-hidden="true" tabindex="-1"></a><span class="co"># draws one row of the maze</span></span>
+<span id="cb5-158"><a href="#cb5-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-159"><a href="#cb5-159" aria-hidden="true" tabindex="-1"></a>    NEWS<span class="op">=</span>num2news(row[<span class="dv">0</span>])</span>
+<span id="cb5-160"><a href="#cb5-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-161"><a href="#cb5-161" aria-hidden="true" tabindex="-1"></a>    s<span class="op">=</span><span class="st">''</span></span>
+<span id="cb5-162"><a href="#cb5-162" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> NEWS[<span class="dv">2</span>]:</span>
+<span id="cb5-163"><a href="#cb5-163" aria-hidden="true" tabindex="-1"></a>        s<span class="op">=</span>s<span class="op">+</span> <span class="st">'|'</span> <span class="co"># left-most wall</span></span>
+<span id="cb5-164"><a href="#cb5-164" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb5-165"><a href="#cb5-165" aria-hidden="true" tabindex="-1"></a>        s<span class="op">=</span>s<span class="op">+</span> <span class="st">' '</span></span>
+<span id="cb5-166"><a href="#cb5-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-167"><a href="#cb5-167" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> v <span class="kw">in</span> row:</span>
+<span id="cb5-168"><a href="#cb5-168" aria-hidden="true" tabindex="-1"></a>        NEWS<span class="op">=</span>num2news(v)</span>
+<span id="cb5-169"><a href="#cb5-169" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb5-170"><a href="#cb5-170" aria-hidden="true" tabindex="-1"></a>        <span class="co"># I only care about the east wall</span></span>
+<span id="cb5-171"><a href="#cb5-171" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb5-172"><a href="#cb5-172" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> NEWS[<span class="dv">1</span>]:</span>
+<span id="cb5-173"><a href="#cb5-173" aria-hidden="true" tabindex="-1"></a>            s<span class="op">=</span>s<span class="op">+</span> <span class="st">'  |'</span></span>
+<span id="cb5-174"><a href="#cb5-174" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb5-175"><a href="#cb5-175" aria-hidden="true" tabindex="-1"></a>            s<span class="op">=</span>s<span class="op">+</span> <span class="st">'   '</span></span>
+<span id="cb5-176"><a href="#cb5-176" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(s)</span>
+<span id="cb5-177"><a href="#cb5-177" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-178"><a href="#cb5-178" aria-hidden="true" tabindex="-1"></a>    <span class="co"># draw the south walls</span></span>
+<span id="cb5-179"><a href="#cb5-179" aria-hidden="true" tabindex="-1"></a>    s<span class="op">=</span><span class="st">'+'</span></span>
+<span id="cb5-180"><a href="#cb5-180" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> v <span class="kw">in</span> row:</span>
+<span id="cb5-181"><a href="#cb5-181" aria-hidden="true" tabindex="-1"></a>        NEWS<span class="op">=</span>num2news(v)</span>
+<span id="cb5-182"><a href="#cb5-182" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-183"><a href="#cb5-183" aria-hidden="true" tabindex="-1"></a>        <span class="co"># I only care about the south wall</span></span>
+<span id="cb5-184"><a href="#cb5-184" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb5-185"><a href="#cb5-185" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> NEWS[<span class="dv">3</span>]:</span>
+<span id="cb5-186"><a href="#cb5-186" aria-hidden="true" tabindex="-1"></a>            s<span class="op">=</span>s<span class="op">+</span> <span class="st">'--+'</span></span>
+<span id="cb5-187"><a href="#cb5-187" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb5-188"><a href="#cb5-188" aria-hidden="true" tabindex="-1"></a>            s<span class="op">=</span>s<span class="op">+</span> <span class="st">'  +'</span></span>
+<span id="cb5-189"><a href="#cb5-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-190"><a href="#cb5-190" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(s)</span>
+<span id="cb5-191"><a href="#cb5-191" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb5-192"><a href="#cb5-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-193"><a href="#cb5-193" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> M2D(Ml,R,C):</span>
+<span id="cb5-194"><a href="#cb5-194" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-195"><a href="#cb5-195" aria-hidden="true" tabindex="-1"></a>    <span class="co"># make 2D (all of the rc -&gt; idx is down a column</span></span>
+<span id="cb5-196"><a href="#cb5-196" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-197"><a href="#cb5-197" aria-hidden="true" tabindex="-1"></a>    M<span class="op">=</span>[]</span>
+<span id="cb5-198"><a href="#cb5-198" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> r <span class="kw">in</span> <span class="bu">range</span>(R):</span>
+<span id="cb5-199"><a href="#cb5-199" aria-hidden="true" tabindex="-1"></a>        M.append([<span class="dv">0</span>]<span class="op">*</span>C)</span>
+<span id="cb5-200"><a href="#cb5-200" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb5-201"><a href="#cb5-201" aria-hidden="true" tabindex="-1"></a>    <span class="co"># copy</span></span>
+<span id="cb5-202"><a href="#cb5-202" aria-hidden="true" tabindex="-1"></a>    count<span class="op">=</span><span class="dv">0</span></span>
+<span id="cb5-203"><a href="#cb5-203" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> c <span class="kw">in</span> <span class="bu">range</span>(C):</span>
+<span id="cb5-204"><a href="#cb5-204" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> r <span class="kw">in</span> <span class="bu">range</span>(R):</span>
+<span id="cb5-205"><a href="#cb5-205" aria-hidden="true" tabindex="-1"></a>           M[r][c]<span class="op">=</span>Ml[count]</span>
+<span id="cb5-206"><a href="#cb5-206" aria-hidden="true" tabindex="-1"></a>           count<span class="op">=</span>count<span class="op">+</span><span class="dv">1</span></span>
+<span id="cb5-207"><a href="#cb5-207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-208"><a href="#cb5-208" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> M</span>
+<span id="cb5-209"><a href="#cb5-209" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-210"><a href="#cb5-210" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> draw_maze_text(Ml,R,C):</span>
+<span id="cb5-211"><a href="#cb5-211" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Draws the maze in text form</span></span>
+<span id="cb5-212"><a href="#cb5-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-213"><a href="#cb5-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-214"><a href="#cb5-214" aria-hidden="true" tabindex="-1"></a>    M<span class="op">=</span>M2D(Ml,R,C)</span>
+<span id="cb5-215"><a href="#cb5-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-216"><a href="#cb5-216" aria-hidden="true" tabindex="-1"></a>    row<span class="op">=</span>M[<span class="dv">0</span>]</span>
+<span id="cb5-217"><a href="#cb5-217" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-218"><a href="#cb5-218" aria-hidden="true" tabindex="-1"></a>    <span class="co"># draw the top wall</span></span>
+<span id="cb5-219"><a href="#cb5-219" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-220"><a href="#cb5-220" aria-hidden="true" tabindex="-1"></a>    s<span class="op">=</span><span class="st">'+'</span></span>
+<span id="cb5-221"><a href="#cb5-221" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> v <span class="kw">in</span> row:</span>
+<span id="cb5-222"><a href="#cb5-222" aria-hidden="true" tabindex="-1"></a>        NEWS<span class="op">=</span>num2news(v)<span class="op">;</span></span>
+<span id="cb5-223"><a href="#cb5-223" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> NEWS[<span class="dv">0</span>]:</span>
+<span id="cb5-224"><a href="#cb5-224" aria-hidden="true" tabindex="-1"></a>            s<span class="op">=</span>s<span class="op">+</span> <span class="st">'--+'</span></span>
+<span id="cb5-225"><a href="#cb5-225" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb5-226"><a href="#cb5-226" aria-hidden="true" tabindex="-1"></a>            s<span class="op">=</span>s<span class="op">+</span> <span class="st">'  +'</span></span>
+<span id="cb5-227"><a href="#cb5-227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-228"><a href="#cb5-228" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(s)</span>
+<span id="cb5-229"><a href="#cb5-229" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-230"><a href="#cb5-230" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> row <span class="kw">in</span> M:</span>
+<span id="cb5-231"><a href="#cb5-231" aria-hidden="true" tabindex="-1"></a>        draw_row_text(row)</span>
+<span id="cb5-232"><a href="#cb5-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-233"><a href="#cb5-233" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> draw_maze(Ml,R,C):</span>
+<span id="cb5-234"><a href="#cb5-234" aria-hidden="true" tabindex="-1"></a>    reset()</span>
+<span id="cb5-235"><a href="#cb5-235" aria-hidden="true" tabindex="-1"></a>    speed(<span class="dv">0</span>)</span>
+<span id="cb5-236"><a href="#cb5-236" aria-hidden="true" tabindex="-1"></a>    <span class="co">#hideturtle()</span></span>
+<span id="cb5-237"><a href="#cb5-237" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-238"><a href="#cb5-238" aria-hidden="true" tabindex="-1"></a>    M<span class="op">=</span>M2D(Ml,R,C)    </span>
+<span id="cb5-239"><a href="#cb5-239" aria-hidden="true" tabindex="-1"></a>    row<span class="op">=</span>M[<span class="dv">0</span>]</span>
+<span id="cb5-240"><a href="#cb5-240" aria-hidden="true" tabindex="-1"></a>    sz<span class="op">=</span><span class="dv">10</span></span>
+<span id="cb5-241"><a href="#cb5-241" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-242"><a href="#cb5-242" aria-hidden="true" tabindex="-1"></a>    penup()</span>
+<span id="cb5-243"><a href="#cb5-243" aria-hidden="true" tabindex="-1"></a>    x,y<span class="op">=-</span>C<span class="op">*</span>sz<span class="op">/</span><span class="dv">2</span>,R<span class="op">*</span>sz<span class="op">/</span><span class="dv">2</span></span>
+<span id="cb5-244"><a href="#cb5-244" aria-hidden="true" tabindex="-1"></a>    goto(x,y)</span>
+<span id="cb5-245"><a href="#cb5-245" aria-hidden="true" tabindex="-1"></a>    <span class="co"># draw the top wall</span></span>
+<span id="cb5-246"><a href="#cb5-246" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> v <span class="kw">in</span> row:</span>
+<span id="cb5-247"><a href="#cb5-247" aria-hidden="true" tabindex="-1"></a>        NEWS<span class="op">=</span>num2news(v)<span class="op">;</span></span>
+<span id="cb5-248"><a href="#cb5-248" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> NEWS[<span class="dv">0</span>]:</span>
+<span id="cb5-249"><a href="#cb5-249" aria-hidden="true" tabindex="-1"></a>            pendown()</span>
+<span id="cb5-250"><a href="#cb5-250" aria-hidden="true" tabindex="-1"></a>            forward(sz)</span>
+<span id="cb5-251"><a href="#cb5-251" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb5-252"><a href="#cb5-252" aria-hidden="true" tabindex="-1"></a>            penup()</span>
+<span id="cb5-253"><a href="#cb5-253" aria-hidden="true" tabindex="-1"></a>            forward(sz)</span>
+<span id="cb5-254"><a href="#cb5-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-255"><a href="#cb5-255" aria-hidden="true" tabindex="-1"></a>    penup()    </span>
+<span id="cb5-256"><a href="#cb5-256" aria-hidden="true" tabindex="-1"></a>    goto(x,y)</span>
+<span id="cb5-257"><a href="#cb5-257" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> row <span class="kw">in</span> M:</span>
+<span id="cb5-258"><a href="#cb5-258" aria-hidden="true" tabindex="-1"></a>        draw_row(row,sz)</span>
+<span id="cb5-259"><a href="#cb5-259" aria-hidden="true" tabindex="-1"></a>        y<span class="op">-=</span>sz</span>
+<span id="cb5-260"><a href="#cb5-260" aria-hidden="true" tabindex="-1"></a>        penup()    </span>
+<span id="cb5-261"><a href="#cb5-261" aria-hidden="true" tabindex="-1"></a>        goto(x,y)</span>
+<span id="cb5-262"><a href="#cb5-262" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-263"><a href="#cb5-263" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> maze(R<span class="op">=</span><span class="dv">20</span>,C<span class="op">=-</span><span class="dv">1</span>):</span>
+<span id="cb5-264"><a href="#cb5-264" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Aldous-Broder's algorithm</span></span>
+<span id="cb5-265"><a href="#cb5-265" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-266"><a href="#cb5-266" aria-hidden="true" tabindex="-1"></a>    <span class="co">#  Pick a point, and move to a neighboring cell at random. If an</span></span>
+<span id="cb5-267"><a href="#cb5-267" aria-hidden="true" tabindex="-1"></a>    <span class="co">#  uncarved cell is entered, carve into it from the previous cell. Keep</span></span>
+<span id="cb5-268"><a href="#cb5-268" aria-hidden="true" tabindex="-1"></a>    <span class="co">#  moving to neighboring cells until all cells have been carved into.</span></span>
+<span id="cb5-269"><a href="#cb5-269" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-270"><a href="#cb5-270" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> C<span class="op">&lt;</span><span class="dv">0</span>:  <span class="co"># default value</span></span>
+<span id="cb5-271"><a href="#cb5-271" aria-hidden="true" tabindex="-1"></a>        C<span class="op">=</span>R</span>
+<span id="cb5-272"><a href="#cb5-272" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb5-273"><a href="#cb5-273" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-274"><a href="#cb5-274" aria-hidden="true" tabindex="-1"></a>    M<span class="op">=</span>[<span class="dv">15</span>]<span class="op">*</span>(R<span class="op">*</span>C)  <span class="co"># all walls up</span></span>
+<span id="cb5-275"><a href="#cb5-275" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-276"><a href="#cb5-276" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-277"><a href="#cb5-277" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-278"><a href="#cb5-278" aria-hidden="true" tabindex="-1"></a>    count<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb5-279"><a href="#cb5-279" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-280"><a href="#cb5-280" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Pick a point...</span></span>
+<span id="cb5-281"><a href="#cb5-281" aria-hidden="true" tabindex="-1"></a>    idx<span class="op">=</span>random.choice(<span class="bu">range</span>(R<span class="op">*</span>C))</span>
+<span id="cb5-282"><a href="#cb5-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-283"><a href="#cb5-283" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-284"><a href="#cb5-284" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Keep moving to neighboring cells until all cells have been carved into. </span></span>
+<span id="cb5-285"><a href="#cb5-285" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> count<span class="op">&lt;</span>(R<span class="op">*</span>C):</span>
+<span id="cb5-286"><a href="#cb5-286" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-287"><a href="#cb5-287" aria-hidden="true" tabindex="-1"></a>        <span class="co">#...and move to a neighboring cell at random.</span></span>
+<span id="cb5-288"><a href="#cb5-288" aria-hidden="true" tabindex="-1"></a>        idx_neighbors<span class="op">=</span>neighbors([idx],M,R,C)</span>
+<span id="cb5-289"><a href="#cb5-289" aria-hidden="true" tabindex="-1"></a>        idx_new<span class="op">=</span>random.choice(idx_neighbors)</span>
+<span id="cb5-290"><a href="#cb5-290" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-291"><a href="#cb5-291" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb5-292"><a href="#cb5-292" aria-hidden="true" tabindex="-1"></a>        <span class="co"># If an uncarved cell is entered...</span></span>
+<span id="cb5-293"><a href="#cb5-293" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> M[idx_new]<span class="op">==</span><span class="dv">15</span>: <span class="co"># uncarved</span></span>
+<span id="cb5-294"><a href="#cb5-294" aria-hidden="true" tabindex="-1"></a>            <span class="co"># ...carve into it from the previous cell.</span></span>
+<span id="cb5-295"><a href="#cb5-295" aria-hidden="true" tabindex="-1"></a>            dir1,dir2<span class="op">=</span>get_direction([idx],[idx_new],M,R,C)</span>
+<span id="cb5-296"><a href="#cb5-296" aria-hidden="true" tabindex="-1"></a>            M[idx]<span class="op">=</span>M[idx]<span class="op">-</span>dir1</span>
+<span id="cb5-297"><a href="#cb5-297" aria-hidden="true" tabindex="-1"></a>            M[idx_new]<span class="op">=</span>M[idx_new]<span class="op">-</span>dir2</span>
+<span id="cb5-298"><a href="#cb5-298" aria-hidden="true" tabindex="-1"></a>          </span>
+<span id="cb5-299"><a href="#cb5-299" aria-hidden="true" tabindex="-1"></a>            count<span class="op">=</span>count<span class="op">+</span><span class="dv">1</span></span>
+<span id="cb5-300"><a href="#cb5-300" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-301"><a href="#cb5-301" aria-hidden="true" tabindex="-1"></a>        idx<span class="op">=</span>idx_new</span>
+<span id="cb5-302"><a href="#cb5-302" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-303"><a href="#cb5-303" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb5-304"><a href="#cb5-304" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> M</span>
+<span id="cb5-305"><a href="#cb5-305" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>R<span class="op">=</span><span class="dv">30</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>C<span class="op">=</span><span class="dv">30</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>M<span class="op">=</span>maze(R,C)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>M[R<span class="op">-</span><span class="dv">1</span>]<span class="op">-=</span><span class="dv">1</span>  <span class="co"># entrance</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>M[<span class="op">-</span>R]<span class="op">-=</span><span class="dv">8</span>   <span class="co"># exit</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>draw_maze_text(M,R,C)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+  +
+|        |        |        |  |        |        |              |     |     |        |     |
++--+--+  +--+  +  +--+  +--+  +  +  +  +  +  +  +--+--+  +--+  +  +--+--+  +--+  +  +  +  +
+|              |  |     |        |  |  |  |  |  |     |  |           |        |  |  |  |  |
++  +--+--+--+  +--+  +  +--+--+  +--+  +--+  +  +--+  +--+--+  +--+--+--+--+  +  +  +  +--+
+|     |        |  |  |           |  |     |  |              |                    |     |  |
++  +--+  +--+--+  +  +  +--+--+--+  +  +  +  +  +--+  +--+--+  +--+--+  +--+  +--+  +--+  +
+|     |  |  |     |  |  |              |     |     |  |     |     |  |  |  |     |  |     |
++  +  +--+  +  +  +  +  +  +--+--+  +--+  +--+--+--+  +  +--+--+--+  +--+  +--+--+  +  +--+
+|  |     |     |     |  |        |  |        |     |                 |                    |
++  +--+  +--+  +--+--+  +--+--+--+--+  +  +--+--+  +--+  +--+  +--+  +--+--+--+  +  +--+--+
+|  |  |  |           |     |  |  |     |  |     |  |        |  |     |           |  |     |
++  +  +  +  +--+--+  +--+  +  +  +  +--+--+--+  +  +--+--+--+  +--+--+--+--+--+--+  +  +  +
+|     |  |        |  |        |        |           |     |  |        |  |              |  |
++  +--+--+--+--+--+  +--+--+  +--+--+  +--+  +--+  +  +--+  +  +  +  +  +  +--+  +--+--+--+
+|        |  |     |  |  |  |     |  |        |  |     |  |  |  |  |     |     |        |  |
++--+--+  +  +--+  +  +  +  +  +--+  +  +  +  +  +  +  +  +  +--+--+  +--+--+  +--+--+--+  +
+|        |        |     |  |  |     |  |  |  |  |  |        |              |        |     |
++  +--+--+--+  +--+--+--+  +--+  +  +--+--+  +  +  +--+--+  +  +--+--+  +  +--+  +--+--+  +
+|  |     |  |  |  |              |  |  |        |        |  |  |  |     |  |           |  |
++  +  +--+  +  +  +  +  +--+--+--+--+  +  +--+--+  +--+--+--+--+  +  +--+--+--+  +--+--+  +
+|              |     |  |     |        |     |  |  |  |        |        |        |        |
++  +--+--+--+--+--+  +  +  +  +--+--+  +--+--+  +  +  +  +  +  +  +  +  +  +  +--+--+--+  +
+|     |        |  |  |  |  |     |     |  |        |  |  |  |     |  |  |  |        |     |
++  +--+  +  +--+  +--+  +--+--+  +  +  +  +  +--+--+  +--+--+  +--+  +--+--+--+  +--+  +--+
+|  |     |     |              |     |     |  |              |  |  |  |  |                 |
++  +--+--+  +--+  +--+--+  +--+  +--+--+  +  +--+--+  +  +--+  +  +  +  +--+--+--+  +--+  +
+|  |     |              |     |        |  |        |  |        |  |        |           |  |
++  +--+  +--+--+  +--+--+--+--+  +--+--+  +--+  +  +--+  +--+  +  +  +--+--+  +  +  +--+--+
+|  |        |        |              |  |  |     |  |        |  |     |        |  |        |
++  +--+--+  +--+  +--+  +--+--+--+--+  +  +  +  +  +  +--+  +--+  +--+--+  +  +--+--+--+  +
+|     |           |        |  |           |  |  |  |  |  |     |     |     |  |           |
++  +--+--+  +  +  +  +--+--+  +  +--+--+--+  +--+  +  +  +--+  +--+  +--+  +--+--+--+--+  +
+|     |     |  |        |  |     |     |        |  |  |  |        |     |     |  |     |  |
++  +  +  +--+--+  +  +--+  +  +--+  +  +--+  +--+--+  +  +--+--+--+--+--+  +--+  +--+  +--+
+|  |     |  |  |  |  |  |        |  |     |        |  |           |                       |
++--+  +  +  +  +  +--+  +--+  +  +  +  +  +--+  +--+--+--+--+--+  +--+--+--+  +  +--+--+  +
+|  |  |  |     |  |        |  |  |  |  |  |           |     |  |  |           |        |  |
++  +  +  +  +--+--+--+  +--+  +--+--+--+  +--+  +  +--+  +--+  +  +--+--+--+--+  +  +--+  +
+|     |  |        |              |  |  |        |     |     |                    |     |  |
++  +--+--+--+--+  +  +--+--+--+  +  +  +--+--+--+--+  +  +--+--+--+--+  +  +--+--+  +--+  +
+|           |        |                 |     |  |  |           |  |     |     |  |     |  |
++--+--+  +--+  +  +--+--+--+  +--+  +--+  +  +  +  +  +--+--+--+  +  +--+--+  +  +  +--+--+
+|  |        |  |  |        |  |  |     |  |     |                          |  |  |        |
++  +--+--+  +  +--+--+--+  +  +  +--+--+--+  +--+--+  +--+--+  +  +  +  +  +--+  +--+--+--+
+|           |  |        |  |     |  |  |     |        |        |  |  |  |     |     |  |  |
++--+  +  +  +--+  +  +--+  +--+  +  +  +--+  +  +--+--+  +  +  +  +--+  +--+  +  +--+  +  +
+|  |  |  |     |  |                    |        |  |     |  |  |     |     |  |           |
++  +  +--+  +  +--+  +--+--+  +  +  +--+  +--+--+  +--+--+--+--+--+--+--+--+  +  +--+  +--+
+|        |  |     |  |     |  |  |  |        |           |  |  |     |              |     |
++  +--+--+  +--+--+--+  +--+--+  +--+--+--+  +  +--+  +--+  +  +  +  +--+  +--+  +--+  +--+
+|  |  |  |  |  |  |  |        |     |              |           |  |  |     |        |     |
++--+  +  +  +  +  +  +--+  +--+--+--+  +--+  +  +--+--+--+--+  +  +--+--+--+--+  +--+  +  +
+|     |     |  |  |  |              |     |  |     |        |     |  |        |     |  |  |
++  +  +--+  +  +  +  +--+  +--+  +--+--+  +--+--+--+--+  +--+  +--+  +  +--+--+--+  +--+--+
+|  |           |  |     |  |                    |  |  |  |        |  |           |        |
++  +--+  +  +  +  +--+  +--+  +  +--+--+--+  +  +  +  +  +--+--+  +  +  +  +--+--+--+--+--+
+|  |     |  |     |  |        |        |     |                 |     |  |  |     |  |     |
++  +--+  +--+  +  +  +  +--+--+--+  +--+  +--+--+  +--+  +--+--+--+  +--+  +  +--+  +--+  +
+|  |        |  |        |              |  |           |        |                          |
++  +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>draw_maze(M,R,C)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="04.03%20Program%20Structure%20-%20Maze_files/figure-html/cell-6-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./04.02 Extended Tank Wars.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Extended Example: Tank Wars with N Players</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./05 More Features of Python.html" class="pagination-link">
+        <span class="nav-page-text">More Features of Python</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

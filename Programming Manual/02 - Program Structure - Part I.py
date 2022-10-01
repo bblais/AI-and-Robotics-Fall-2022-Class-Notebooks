@@ -320,8 +320,9 @@ right(90)
 forward(size)
 
 
-# ::: callout
-# **Exercise:**  Write a program to ask the user for the size, and the x and y coordinates of the center of a circle, and draw it.
+# ::: {.callout-tip}
+# ## Exercise
+# Write a program to ask the user for the size, and the x and y coordinates of the center of a circle, and draw it.
 # :::
 
 # 
