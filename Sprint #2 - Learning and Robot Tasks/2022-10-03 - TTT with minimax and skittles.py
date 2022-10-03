@@ -1,0 +1,276 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[1]:
+
+
+from Game import *
+
+
+# In[2]:
+
+
+def initial_state():
+    state=Board(3,3)
+    
+    # state[0]=1 in cases where we need to have starting pieces
+    return state
+
+
+# In[3]:
+
+
+def valid_moves(state,player):
+    
+    # nope -- return [0,1,2,3,4,5,6,7,8]
+    
+    EMPTY=0
+    X=1
+    O=2
+    
+    moves=[]
+    
+    if state[0]==0:
+        moves.append(0)
+    if state[1]==0:
+        moves.append(1)        
+    if state[2]==0:
+        moves.append(2)
+        
+    #....
+    
+    moves=[]
+    for location in range(9):
+        if state[location]==EMPTY:
+            moves.append(location)
+    
+    
+    return moves
+
+
+# In[4]:
+
+
+def update_state(state,player,move):
+    
+    new_state=state
+    
+    new_state[move]=player
+    
+    return new_state
+
+
+# In[12]:
+
+
+def three_in_a_row(a,b,c,player):
+    
+    if a==player and b==player and c==player:
+        return True
+    else:
+        return False
+    
+    
+    
+def win_status(state,player):
+    
+    # 0 1 2
+    # 3 4 5
+    # 6 7 8
+    
+    if player==1:
+        other_player=2
+    else:
+        other_player=1
+    
+    if three_in_a_row(state[0],state[1],state[2],player):
+        return 'win'
+    if three_in_a_row(state[3],state[4],state[5],player):
+        return 'win'
+    if three_in_a_row(state[6],state[7],state[8],player):
+        return 'win'
+    if three_in_a_row(state[0],state[3],state[6],player):
+        return 'win'
+    if three_in_a_row(state[1],state[4],state[7],player):
+        return 'win'
+    if three_in_a_row(state[2],state[5],state[8],player):
+        return 'win'
+    if three_in_a_row(state[0],state[4],state[8],player):
+        return 'win'
+    if three_in_a_row(state[2],state[4],state[6],player):
+        return 'win'
+    
+    if not valid_moves(state,other_player):
+        return 'stalemate'
+    
+    
+def show_state(state):
+    print(state)
+    
+
+
+# In[13]:
+
+
+def random_move(state,player):    
+    moves=valid_moves(state,player)
+    return random.choice(moves)
+ 
+random_agent=Agent(random_move)    
+
+
+# In[14]:
+
+
+def human_move(state,player):    
+    print("""
+    0 1 2
+    3 4 5
+    6 7 8
+    """)
+    move=int(input("What location do you want to move?"))
+    return move
+ 
+human_agent=Agent(human_move)    
+
+
+# In[15]:
+
+
+from Game.minimax import *
+def minimax_move(state,player):
+    values,moves=minimax_values(state,player,maxdepth=20,display=True)
+    return top_choice(moves,values)
+    
+def heuristic(state,player):
+    # returns between -1 and 1 (not inclusive)
+    # approximate value of a state
+    # positive = good for the player
+    # negative = bad for player
+    
+    return 0
+
+# material advantage
+def heuristic(state,player):
+    # returns between -1 and 1 (not inclusive)
+    # approximate value of a state
+    # positive = good for the player
+    # negative = bad for player
+    
+    # count up my pieces, count up their pieces
+    N_player=count_pieces(state,player)
+    N_other=count_pieces(state,other_player)
+    
+    return (N_player-N_other)/(N_player+N_other)
+    
+    
+    
+    return 0
+
+
+
+
+minimax_agent=Agent(minimax_move)
+
+
+# In[16]:
+
+
+def skittles_move(state,player,info):
+    T=info.T
+    last_state=info.last_state
+    last_action=info.last_action
+    
+    
+    if state not in T:
+        actions=valid_moves(state,player)
+        T[state]=Table()
+        for action in actions:
+            T[state][action]=3  # number of skittles
+        
+    
+    move=weighted_choice(T[state])
+    
+    if move is None:  # can't win from this state
+        if not last_state is None:
+            T[last_state][last_action]-=1   # take away a skittle
+            if T[last_state][last_action]<0:
+                T[last_state][last_action]=0
+    
+        move=random_move(state,player)
+    
+    return move
+
+def skittles_after(status,player,info):  # this is called after the game is over
+    T=info.T
+    last_state=info.last_state
+    last_action=info.last_action
+
+    if status=='lose':
+        T[last_state][last_action]-=1   # take away a skittle
+        if T[last_state][last_action]<0:
+            T[last_state][last_action]=0
+    
+    
+
+
+# In[17]:
+
+
+skittles_agent1=Agent(skittles_move)
+skittles_agent1.T=Table()
+skittles_agent1.post=skittles_after
+
+skittles_agent2=Agent(skittles_move)
+skittles_agent2.T=Table()
+skittles_agent2.post=skittles_after
+
+
+# In[18]:
+
+
+g=Game()
+g.run(skittles_agent1,random_agent)
+
+
+# In[20]:
+
+
+skittles_agent1.T
+
+
+# In[21]:
+
+
+g=Game(number_of_games=1000)
+g.display=False
+result=g.run(skittles_agent1,random_agent)
+result.count(1),result.count(2)
+
+
+# In[23]:
+
+
+g=Game(number_of_games=1000)
+g.display=False
+result=g.run(skittles_agent1,random_agent)
+result.count(1),result.count(2)
+
+
+# In[24]:
+
+
+skittles_agent1.T
+
+
+# In[25]:
+
+
+len(skittles_agent1.T)
+
+
+# In[ ]:
+
+
+
+
