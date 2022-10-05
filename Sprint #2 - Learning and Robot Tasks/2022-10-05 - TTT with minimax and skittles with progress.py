@@ -292,15 +292,39 @@ S=Storage()
 one,two,ties,N=0,0,0,0
 
 
-# In[ ]:
+# In[27]:
 
 
 for i in tqdm(range(1000)):
     g=Game(number_of_games=100)
     g.display=False
     
-    result=g.run(skittles_agent1,random_agent)
+    result=g.run(skittles_agent1,skittles_agent2)
     one,two,ties,N=one+result.count(1),two+result.count(2),ties+result.count(0),N+len(result)
     
     S+=one/N*100,two/N*100,ties/N*100,N
+
+
+# In[28]:
+
+
+y1,y2,y0,x=S.arrays()
+
+
+# In[29]:
+
+
+figure(figsize=(16,8))
+plot(x,y1,label='One Win')
+plot(x,y2,label='Two Win')
+plot(x,y0,label='Tie')
+legend()
+xlabel('Number of Games')
+ylabel('Percent')
+
+
+# In[ ]:
+
+
+
 
