@@ -239,10 +239,10 @@ S=Storage()
 one,two,ties,N=0,0,0,0
 
 
-# In[15]:
+# In[21]:
 
 
-for i in tqdm(range(500)):
+for i in tqdm(range(1000)):
     g=Game(number_of_games=100)
     g.display=False
     
@@ -252,19 +252,19 @@ for i in tqdm(range(500)):
     S+=one/N*100,two/N*100,ties/N*100,N
 
 
-# In[18]:
+# In[22]:
 
 
 y1,y2,y0,x=S.arrays()
 
 
-# In[19]:
+# In[23]:
 
 
 from bigfonts import *
 
 
-# In[20]:
+# In[24]:
 
 
 figure(figsize=(16,8))
@@ -276,8 +276,31 @@ xlabel('Number of Games')
 ylabel('Percent')
 
 
+# ## Skittles v Skittles
+
+# In[25]:
+
+
+skittles_agent1.T=Table()
+skittles_agent2.T=Table()
+
+
+# In[26]:
+
+
+S=Storage()
+one,two,ties,N=0,0,0,0
+
+
 # In[ ]:
 
 
-
+for i in tqdm(range(1000)):
+    g=Game(number_of_games=100)
+    g.display=False
+    
+    result=g.run(skittles_agent1,random_agent)
+    one,two,ties,N=one+result.count(1),two+result.count(2),ties+result.count(0),N+len(result)
+    
+    S+=one/N*100,two/N*100,ties/N*100,N
 
