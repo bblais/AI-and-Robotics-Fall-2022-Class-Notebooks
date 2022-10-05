@@ -22,26 +22,9 @@ def initial_state():
 
 def valid_moves(state,player):
     
-    # nope -- return [0,1,2,3,4,5,6,7,8]
-    
-    EMPTY=0
-    X=1
-    O=2
-    
-    moves=[]
-    
-    if state[0]==0:
-        moves.append(0)
-    if state[1]==0:
-        moves.append(1)        
-    if state[2]==0:
-        moves.append(2)
-        
-    #....
-    
     moves=[]
     for location in range(9):
-        if state[location]==EMPTY:
+        if state[location]==0:
             moves.append(location)
     
     
@@ -60,7 +43,7 @@ def update_state(state,player,move):
     return new_state
 
 
-# In[12]:
+# In[5]:
 
 
 def three_in_a_row(a,b,c,player):
@@ -109,7 +92,7 @@ def show_state(state):
     
 
 
-# In[13]:
+# In[6]:
 
 
 def random_move(state,player):    
@@ -119,7 +102,7 @@ def random_move(state,player):
 random_agent=Agent(random_move)    
 
 
-# In[14]:
+# In[7]:
 
 
 def human_move(state,player):    
@@ -134,12 +117,12 @@ def human_move(state,player):
 human_agent=Agent(human_move)    
 
 
-# In[15]:
+# In[46]:
 
 
 from Game.minimax import *
 def minimax_move(state,player):
-    values,moves=minimax_values(state,player,maxdepth=20,display=True)
+    values,moves=minimax_values(state,player,maxdepth=20,display=False)
     return top_choice(moves,values)
     
 def heuristic(state,player):
@@ -173,7 +156,7 @@ def heuristic(state,player):
 minimax_agent=Agent(minimax_move)
 
 
-# In[16]:
+# In[9]:
 
 
 def skittles_move(state,player,info):
@@ -214,7 +197,7 @@ def skittles_after(status,player,info):  # this is called after the game is over
     
 
 
-# In[17]:
+# In[51]:
 
 
 skittles_agent1=Agent(skittles_move)
@@ -226,47 +209,11 @@ skittles_agent2.T=Table()
 skittles_agent2.post=skittles_after
 
 
-# In[18]:
+# In[52]:
 
 
 g=Game()
 g.run(skittles_agent1,random_agent)
-
-
-# In[20]:
-
-
-skittles_agent1.T
-
-
-# In[21]:
-
-
-g=Game(number_of_games=1000)
-g.display=False
-result=g.run(skittles_agent1,random_agent)
-result.count(1),result.count(2)
-
-
-# In[23]:
-
-
-g=Game(number_of_games=1000)
-g.display=False
-result=g.run(skittles_agent1,random_agent)
-result.count(1),result.count(2)
-
-
-# In[24]:
-
-
-skittles_agent1.T
-
-
-# In[25]:
-
-
-len(skittles_agent1.T)
 
 
 # In[ ]:
