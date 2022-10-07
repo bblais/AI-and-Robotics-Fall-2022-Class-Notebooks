@@ -34,6 +34,68 @@ def valid_moves(state,player):
 # In[4]:
 
 
+# def valid_moves(state,player):
+    
+#     # 1 2 0
+#     # 6 9 0
+#     # 0 0 0 
+    
+#     # [(3,2),(5,2),(7,2),(3,5),(5,5),(7,5),....]
+    
+#     values=[1,3,5,7,9]
+#     for location in range(9):
+#         if state[location] in values:
+#             values.remove(state[location])
+    
+    
+    
+#     moves=[]
+    
+#     for value in values:
+#         for location in range(9):
+#             if state[location]==0:
+#                 moves.append((value,location))
+    
+    
+#     return moves
+
+
+# In[5]:
+
+
+# values=[1,3,5,7,9]
+
+
+# In[6]:
+
+
+# values.remove(3)
+# values
+
+
+# In[7]:
+
+
+# state=initial_state()
+# state[0]=3
+# state[2]=5
+
+
+# In[8]:
+
+
+# valid_moves(state,1)
+
+
+# In[ ]:
+
+
+
+
+
+# In[9]:
+
+
 def update_state(state,player,move):
     
     new_state=state
@@ -43,7 +105,7 @@ def update_state(state,player,move):
     return new_state
 
 
-# In[5]:
+# In[10]:
 
 
 def three_in_a_row(a,b,c,player):
@@ -92,7 +154,7 @@ def show_state(state):
     
 
 
-# In[6]:
+# In[11]:
 
 
 def random_move(state,player):    
@@ -102,7 +164,7 @@ def random_move(state,player):
 random_agent=Agent(random_move)    
 
 
-# In[7]:
+# In[12]:
 
 
 def human_move(state,player):    
@@ -117,7 +179,7 @@ def human_move(state,player):
 human_agent=Agent(human_move)    
 
 
-# In[8]:
+# In[13]:
 
 
 from Game.minimax import *
@@ -156,7 +218,7 @@ def heuristic(state,player):
 minimax_agent=Agent(minimax_move)
 
 
-# In[9]:
+# In[14]:
 
 
 def skittles_move(state,player,info):
@@ -197,7 +259,7 @@ def skittles_after(status,player,info):  # this is called after the game is over
     
 
 
-# In[10]:
+# In[15]:
 
 
 skittles_agent1=Agent(skittles_move)
@@ -209,7 +271,7 @@ skittles_agent2.T=Table()
 skittles_agent2.post=skittles_after
 
 
-# In[11]:
+# In[16]:
 
 
 g=Game()
@@ -218,13 +280,13 @@ g.run(skittles_agent1,random_agent)
 
 # ## Progress
 
-# In[12]:
+# In[17]:
 
 
 skittles_agent1.T=Table()
 
 
-# In[13]:
+# In[18]:
 
 
 get_ipython().run_line_magic('matplotlib', 'inline')
@@ -232,14 +294,14 @@ from matplotlib.pyplot import figure,plot,grid,legend,xlabel,ylabel,title
 from tqdm.notebook import tqdm
 
 
-# In[14]:
+# In[19]:
 
 
 S=Storage()
 one,two,ties,N=0,0,0,0
 
 
-# In[21]:
+# In[20]:
 
 
 for i in tqdm(range(1000)):
@@ -252,7 +314,7 @@ for i in tqdm(range(1000)):
     S+=one/N*100,two/N*100,ties/N*100,N
 
 
-# In[22]:
+# In[21]:
 
 
 y1,y2,y0,x=S.arrays()
@@ -278,21 +340,21 @@ ylabel('Percent')
 
 # ## Skittles v Skittles
 
-# In[25]:
+# In[21]:
 
 
 skittles_agent1.T=Table()
 skittles_agent2.T=Table()
 
 
-# In[26]:
+# In[22]:
 
 
 S=Storage()
 one,two,ties,N=0,0,0,0
 
 
-# In[27]:
+# In[23]:
 
 
 for i in tqdm(range(1000)):
@@ -321,6 +383,12 @@ plot(x,y0,label='Tie')
 legend()
 xlabel('Number of Games')
 ylabel('Percent')
+
+
+# In[30]:
+
+
+SaveTable(skittles_agent1.T,"TTT Skittles Table 1.json")
 
 
 # In[ ]:
