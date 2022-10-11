@@ -153,7 +153,7 @@ human_agent=Agent(human_move)
 
 from Game.minimax import *
 def minimax_move(state,player):
-    values,moves=minimax_values(state,player,maxdepth=20,display=True)
+    values,moves=minimax_values(state,player,maxdepth=20,display=True,cache=False)
     return top_choice(moves,values)
     
 def heuristic(state,player):
@@ -194,20 +194,122 @@ g=Game()
 g.run(minimax_agent,random_agent)
 
 
+# The first time it sees the initial state it takes 0.7 seconds to solve.  the second time it sees it,
+
 # In[10]:
 
 
-state=initial_state()
-state[0]=1
-state[1]=2
-values,moves=minimax_values(state,1,display=True)
-values,moves
+g=Game()
+g.run(minimax_agent,random_agent)
+
+
+# it only takes 0.00055 seconds.  that's because of caching.  to really test minimax speed, we need to turn caching off in the minimax move (first introduced in version 0.2.37).  You need to restart the kernel and replace the minimax move with this version:
+
+# In[9]:
+
+
+def minimax_move(state,player):
+    values,moves=minimax_values(state,player,maxdepth=20,display=True,cache=False)
+    return top_choice(moves,values)
+
+
+# In[11]:
+
+
+g=Game()
+g.run(minimax_agent,random_agent)
 
 
 # In[12]:
 
 
+g=Game()
+g.run(minimax_agent,random_agent)
+
+
+# a bit more direct to test, make the state mid-game.  for TTT the depth is 6 and the breadth is around 9 to start, and gets smaller.  Seems like it takes 2 seconds for the first move.  let's test this by making an initial state.
+
+# In[14]:
+
+
 state=initial_state()
-values,moves=minimax_values(state,1,display=True)
-values,moves
+print(state)
+player=1
+values=minimax_values(state,player,display=True,cache=False)
+
+
+# 2nd move takes how long?  (depth of 8, breadth starts at 8)
+
+# In[17]:
+
+
+state=initial_state()
+state[0]=1
+print(state)
+player=2
+values=minimax_values(state,player,display=True,cache=False)
+
+
+# 3rd move how long?
+
+# In[16]:
+
+
+state=initial_state()
+state[0]=1
+state[2]=2
+print(state)
+player=1
+values=minimax_values(state,player,display=True,cache=False)
+
+
+# and on....
+
+# In[22]:
+
+
+player=1
+other_player=2
+state=initial_state()
+for i in range(9):
+    print(state)
+    values=minimax_values(state,player,display=True,cache=False)
+    state[i]=player
+    player,other_player=other_player,player
+    
+
+
+# In[26]:
+
+
+x=range(9)
+y=[2.07,0.2913,0.1487,0.04204893112182617,0.008081197738647461,
+  0.0018281936645507812,0.0003509521484375,0.00021195411682128906,7.605e-05]
+
+
+# In[27]:
+
+
+get_ipython().run_line_magic('matplotlib', 'inline')
+from pylab import *
+
+
+# In[28]:
+
+
+plot(x,y,'-o')
+
+
+# In[30]:
+
+
+semilogy(x,y,'-o')
+
+
+# linear on a log plot is exponential!
+
+# In[ ]:
+
+
+
 
