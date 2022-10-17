@@ -15,6 +15,14 @@ from Robot373 import *
 left,right=Motors("ab")
 
 
+# if you have your left motor on port C and right motor on B, you'd use
+
+# In[ ]:
+
+
+left,right=Motors("cb")
+
+
 # You can set the power on a motor to between -100 and 100, for full power backward to full power forward using  `motorname.power=value`
 
 # In[ ]:
