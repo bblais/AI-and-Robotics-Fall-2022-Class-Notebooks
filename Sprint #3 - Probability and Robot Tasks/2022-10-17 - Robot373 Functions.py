@@ -99,6 +99,40 @@ eyes,touch=Sensors(None,None,"us","touch")
 # - "ir":  ![image.png](attachment:6f4e3abe-c478-4cf9-a17c-cd423ec45d1f.png)
 # - "gyro": ![image.png](attachment:a9058d16-7342-4089-9c95-13e5bc4839ee.png)
 
+# ### To test a sensor, set up a loop and print the value
+
+# The following will print out the value of the color sensor every 1/20 of a second until you hit `CTRL-C` (i.e. `KeyboardInterrupt`) to stop the program.
+
+# In[ ]:
+
+
+from Robot373 import *
+
+color_sensor=Sensors(None,"color",None,None)
+
+try:
+    while True:
+        color=color_sensor.value
+        print(color)
+        Wait(0.05)
+except KeyboardInterrupt:
+    pass
+
+Shutdown()
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
 # ## Running on the robot
 
 # - Edit the files on your robot
