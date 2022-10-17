@@ -1,6 +1,11 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+# - The Robot373 library is at https://github.com/bblais/Robot373
+# - Download and Install it with:
+# 
+# `pip install "git+https://github.com/bblais/Robot373" --upgrade`
+
 # In[2]:
 
 
