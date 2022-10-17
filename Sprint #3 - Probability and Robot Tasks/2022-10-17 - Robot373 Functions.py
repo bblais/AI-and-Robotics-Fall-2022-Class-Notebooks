@@ -57,6 +57,14 @@ left.power=0
 left.position
 
 
+# The units for this position are somewhat arbitrary, so you'll have to figure out how it relates to angle turned.  You can reset this with the `reset_position` function.
+
+# In[ ]:
+
+
+left.reset_position()
+
+
 # In[ ]:
 
 
@@ -90,6 +98,31 @@ eyes,touch=Sensors(None,None,"us","touch")
 # - "color": ![image.png](attachment:8f3dc623-7598-4c5d-aaa0-f2bdb7d108a6.png)
 # - "ir":  ![image.png](attachment:6f4e3abe-c478-4cf9-a17c-cd423ec45d1f.png)
 # - "gyro": ![image.png](attachment:a9058d16-7342-4089-9c95-13e5bc4839ee.png)
+
+# ## Running on the robot
+
+# - Edit the files on your robot
+#     - VS Code with the Remote SSH Extension
+#     - FileZilla or any other SSH/SFTP client
+# - Run the files on your robot
+# 
+# ```
+# glop-/Users/bblais-> ssh pi@10.2.2.32
+# pi@10.2.2.32's password:
+# Linux dex 4.19.66-v7+ #1253 SMP Thu Aug 15 11:49:46 BST 2019 armv7l
+# 
+# The programs included with the Debian GNU/Linux system are free software;
+# the exact distribution terms for each program are described in the
+# individual files in /usr/share/doc/*/copyright.
+# 
+# Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+# permitted by applicable law.
+# Last login: Mon Oct 17 14:06:26 2022 from 10.100.52.148
+# pi@dex:~ $ cd python
+# pi@dex:~/python $ ls
+# motorAB_test.py
+# pi@dex:~/python $ python motorAB_test.py
+# ```
 
 # In[ ]:
 
