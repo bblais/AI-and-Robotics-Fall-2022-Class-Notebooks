@@ -12,6 +12,8 @@
 from Robot373 import *
 
 
+# ## Motors
+
 # The `Motors` function defines where the motors are connected.  In this example, we have a motor on port A which we will label `left` and one on port B which we label as `right`
 
 # In[ ]:
@@ -79,6 +81,8 @@ left.reset_position()
 Shutdown()
 
 
+# ## Sensors
+
 # The `Sensors` function defines where the sensors are connected and what type they are.  Use `None` if there is nothing connected.
 # 
 # This example has the ultrasonic distance sensor (i.e. eyes) connected on port S3 and a touch sensor connected on port S4.  There is nothing connected to ports S1 and S2.
@@ -94,7 +98,7 @@ eyes,touch=Sensors(None,None,"us","touch")
 # Types of sensors:
 # 
 # - "touch":  ![image.png](attachment:4f257ea6-2c31-4c76-bf69-adb2a65b8a16.png)
-# - "us": ![image.png](attachment:9978ae50-107e-4fe9-8f6e-1c0007c0aa35.png)
+# - "us" or "ultrasonic": ![image.png](attachment:9978ae50-107e-4fe9-8f6e-1c0007c0aa35.png)
 # - "color": ![image.png](attachment:8f3dc623-7598-4c5d-aaa0-f2bdb7d108a6.png)
 # - "ir":  ![image.png](attachment:6f4e3abe-c478-4cf9-a17c-cd423ec45d1f.png)
 # - "gyro": ![image.png](attachment:a9058d16-7342-4089-9c95-13e5bc4839ee.png)
@@ -127,10 +131,49 @@ Shutdown()
 
 
 
+# ## Timers
+# 
+# You can make a timer with the `Timer` object.  The `timer.value` returns the time in seconds since the timer was reset.  An example would be this, which prints out a value every 0.1 seconds for 5 seconds.
+
 # In[ ]:
 
 
+timer=Timer()
+while timer.value<5:
+    print(left.position,right.position)
+    Wait(.1)
 
+
+# ## Programming pattern -- flags
+
+# It is a common programming pattern to have a true/false (i.e. boolean) variable called a flag that keeps track of an event that toggles.  For example, if you want to have something happen when a button is pressed -- but don't want to do that thing while you're holding the button down, you can use a flag.   Here's an example which prints something when a button is pressed and then again when the button is released.
+
+# In[ ]:
+
+
+touch=Sensors("touch",None,None,None)
+
+pressed=False
+
+while True:
+    if touch.value and not pressed:
+        print("Button Pressed")
+        pressed=True
+    elif not touch.value and pressed:
+        print("Button Released")
+        pressed=False
+
+
+# compare is with the same code without the flag, and you'll see the difference immediately.
+
+# In[ ]:
+
+
+while True:
+    if touch.value:
+        print("Button Pressed")
+    elif not touch.value:
+        print("Button Released")
 
 
 # ## Running on the robot
