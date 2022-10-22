@@ -12,7 +12,7 @@
 from Robot373 import *
 
 
-# ## Motors
+# # Motors
 
 # The `Motors` function defines where the motors are connected.  In this example, we have a motor on port A which we will label `left` and one on port B which we label as `right`
 
@@ -81,7 +81,7 @@ left.reset_position()
 Shutdown()
 
 
-# ## Sensors
+# # Sensors
 
 # The `Sensors` function defines where the sensors are connected and what type they are.  Use `None` if there is nothing connected.
 # 
@@ -125,13 +125,39 @@ except KeyboardInterrupt:
 Shutdown()
 
 
+# ## Colors
+
 # In[ ]:
 
 
 
 
 
-# ## Timers
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# # Timers
 # 
 # You can make a timer with the `Timer` object.  The `timer.value` returns the time in seconds since the timer was reset.  An example would be this, which prints out a value every 0.1 seconds for 5 seconds.
 
@@ -144,7 +170,7 @@ while timer.value<5:
     Wait(.1)
 
 
-# ## Programming pattern -- flags
+# # Programming pattern -- flags
 
 # It is a common programming pattern to have a true/false (i.e. boolean) variable called a flag that keeps track of an event that toggles.  For example, if you want to have something happen when a button is pressed -- but don't want to do that thing while you're holding the button down, you can use a flag.   Here's an example which prints something when a button is pressed and then again when the button is released.
 
@@ -176,7 +202,7 @@ while True:
         print("Button Released")
 
 
-# ## Running on the robot
+# # Running on the robot
 
 # - Edit the files on your robot
 #     - VS Code with the Remote SSH Extension
