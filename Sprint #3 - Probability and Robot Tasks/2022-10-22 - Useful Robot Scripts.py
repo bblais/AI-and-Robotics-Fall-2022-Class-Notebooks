@@ -192,12 +192,13 @@ Shutdown()
 from Robot373 import *
 
 color_sensor=Sensors(None,"color",None,None)  # color on sensor port S2
+print("Waiting for sensor to warm up...")
+while color_sensor.value is None:
+    Wait(0.05)
+print("done.")
 
 try:
     while True:
-        if not value:  # in case there is an illegal sensor value
-            continue
-
         r,g,b,something=color_sensor.value
         print(r,g,b,something)
         print(closest_color(r,g,b,

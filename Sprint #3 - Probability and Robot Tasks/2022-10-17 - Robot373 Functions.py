@@ -125,6 +125,8 @@ except KeyboardInterrupt:
 Shutdown()
 
 
+# ### TypeError: NoneType object....
+
 # It takes a little bit for sensors to give reasonable values.  Until they warm up, they return `None` for their value.  To solve it, you need to wait until the sensor starts returning reasonable things.
 # 
 # Method #1:  Put a `Wait` command.
@@ -159,7 +161,7 @@ color_sensor=Sensors(None,"color",None,None)
 
 print("Waiting for sensor to warm up...")
 while color_sensor.value is None:
-    Wait(0.01)
+    Wait(0.05)
 print("done.")
 
 
