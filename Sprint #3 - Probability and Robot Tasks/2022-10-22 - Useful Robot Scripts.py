@@ -139,6 +139,47 @@ except KeyboardInterrupt:
 Shutdown()
 
 
+# Move 30 cm and stop
+
+# In[ ]:
+
+
+from Robot373 import *
+
+def degrees(position):
+    return position*1.0  # not sure of the conversion factor here -- is it 1?
+
+def distance_traveled(position):
+    wheel_diameter_cm=2
+    pi=3.141592653589793235
+    
+    return pi*wheel_diameter_cm*degrees(position)/360
+
+    
+    
+
+left,right=Motors("ab")
+
+left.power=50
+right.power=50
+
+
+try:
+    while distance_traveled(left.position)<30:  # cm
+        print("distance traveled so far:",distance_traveled(left.position))
+        Wait(0.01)
+except KeyboardInterrupt:
+    pass
+
+Shutdown()
+
+
+# In[ ]:
+
+
+
+
+
 # - use the color sensor to distinguish two colors (could be black and white, or any other pair of colors)
 
 # In[ ]:
