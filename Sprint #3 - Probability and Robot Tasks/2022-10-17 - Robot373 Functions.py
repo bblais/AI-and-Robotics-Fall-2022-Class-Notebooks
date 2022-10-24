@@ -125,6 +125,56 @@ except KeyboardInterrupt:
 Shutdown()
 
 
+# It takes a little bit for sensors to give reasonable values.  Until they warm up, they return `None` for their value.  To solve it, you need to wait until the sensor starts returning reasonable things.
+# 
+# Method #1:  Put a `Wait` command.
+
+# In[ ]:
+
+
+from Robot373 import *
+
+color_sensor=Sensors(None,"color",None,None)
+Wait(3)
+
+try:
+    while True:
+        color=color_sensor.value
+        print(color)
+        Wait(0.05)
+except KeyboardInterrupt:
+    pass
+
+Shutdown()
+
+
+# a better way is to check the sensor to be not None.
+
+# In[ ]:
+
+
+from Robot373 import *
+
+color_sensor=Sensors(None,"color",None,None)
+
+print("Waiting for sensor to warm up...")
+while color_sensor.value is None:
+    Wait(0.01)
+print("done.")
+
+
+
+try:
+    while True:
+        color=color_sensor.value
+        print(color)
+        Wait(0.05)
+except KeyboardInterrupt:
+    pass
+
+Shutdown()
+
+
 # ## Colors
 
 # In[ ]:
