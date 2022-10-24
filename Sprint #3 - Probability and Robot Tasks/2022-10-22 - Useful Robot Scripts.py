@@ -146,6 +146,9 @@ Shutdown()
 
 from Robot373 import *
 
+left,right=Motors("ab")
+
+
 def degrees(position):
     return position*1.0  # not sure of the conversion factor here -- is it 1?
 
@@ -158,7 +161,6 @@ def distance_traveled(position):
     
     
 
-left,right=Motors("ab")
 
 left.power=50
 right.power=50
@@ -175,6 +177,73 @@ left.power=0
 right.power=0
 
 
+Shutdown()
+
+
+# make some functions for the basic motions
+
+# In[ ]:
+
+
+from Robot373 import *
+
+left,right=Motors("ab")
+
+
+def degrees(position):
+    return position*1.0  # not sure of the conversion factor here -- is it 1?
+
+def distance_traveled(position):
+    wheel_diameter_cm=2
+    pi=3.141592653589793235
+    
+    return pi*wheel_diameter_cm*degrees(position)/360
+
+def go_forward(distance):
+
+    left.reset_position()
+    
+    left.power=50
+    right.power=50
+
+
+    try:
+        while distance_traveled(left.position)<distance:  # cm
+            print("distance traveled so far:",distance_traveled(left.position))
+            Wait(0.05)
+    except KeyboardInterrupt:
+        pass
+
+    left.power=0
+    right.power=0
+
+
+def turn_right(degrees):
+    left.reset_position()
+    
+    left.power=50
+    right.power=-50
+
+    axis_length_cm=6
+    pi=3.14159
+    distance_needed=(axis_length_cm/2)*2*pi/360*degrees  # need a quarter turn of the robot
+
+    try:
+        while distance_traveled(left.position)<distance_needed:
+            print("[turning right] distance traveled so far:",distance_traveled(left.position))
+            Wait(0.01)
+    except KeyboardInterrupt:
+        pass
+    
+    
+go_forward(30)
+
+turn_right(degrees)
+
+go_forward(40)
+    
+    
+    
 Shutdown()
 
 
