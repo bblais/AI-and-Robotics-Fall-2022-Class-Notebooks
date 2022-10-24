@@ -77,8 +77,8 @@ def distance_traveled(position):
 
 left,right=Motors("ab")
 
-left.power(50)
-right.power(50)
+left.power=50
+right.power=50
 
 
 
@@ -120,10 +120,11 @@ def distance_traveled(position):
 
 left,right=Motors("ab")
 
-left.power(50)
-right.power(-50)
+left.power=50
+right.power=-50
 
 axis_length_cm=6
+pi=3.14159
 distance_needed=(axis_length_cm/2)*2*pi/4  # need a quarter turn of the robot
 
 
@@ -145,7 +146,7 @@ Shutdown()
 
 from Robot373 import *
 
-color_sensor=Sensors("color",None)
+color_sensor=Sensors(None,"color",None,None)  # color on sensor port S2
 
 try:
     while True:
