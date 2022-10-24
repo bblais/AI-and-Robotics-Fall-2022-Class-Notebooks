@@ -235,12 +235,18 @@ def turn_right(degrees):
     except KeyboardInterrupt:
         pass
     
+    left.power=0
+    right.power=0
+    
     
 go_forward(30)
+Wait(1)
 
 turn_right(degrees)
+Wait(1)
 
 go_forward(40)
+Wait(1)
     
     
     
