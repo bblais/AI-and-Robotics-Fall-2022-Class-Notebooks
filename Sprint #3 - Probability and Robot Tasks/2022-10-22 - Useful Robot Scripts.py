@@ -167,9 +167,13 @@ right.power=50
 try:
     while distance_traveled(left.position)<30:  # cm
         print("distance traveled so far:",distance_traveled(left.position))
-        Wait(0.01)
+        Wait(0.05)
 except KeyboardInterrupt:
     pass
+
+left.power=0
+right.power=0
+
 
 Shutdown()
 
