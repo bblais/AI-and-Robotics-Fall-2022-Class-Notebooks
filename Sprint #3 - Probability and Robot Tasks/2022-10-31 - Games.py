@@ -212,6 +212,33 @@ def valid_moves(state,player):
     return moves
 
 
+# In[70]:
+
+
+s1=[1,2,3]
+s2=[1,0,3]
+
+
+# In[73]:
+
+
+s=[state[0],state[1],state[2]]
+if sum(s)==15 and prod(s)>0:
+    pass
+
+
+# In[ ]:
+
+
+
+
+
+# In[72]:
+
+
+sum(s1),prod(s1)
+
+
 # In[66]:
 
 
