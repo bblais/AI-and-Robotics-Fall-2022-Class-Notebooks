@@ -77,7 +77,14 @@ if player==1:
 # In[ ]:
 
 
-if player1_move=="scissors" and player2_move=="rock":
+a=state[-2]
+b=state[-1]
+
+
+# In[ ]:
+
+
+if a=="scissors" and b=="rock":
     #  all wins/losses are phrased in terms of player 2
     return "win"
 elif .....
