@@ -8,6 +8,24 @@ from Game import *
 from Game.cards import *
 
 
+# In[2]:
+
+
+deck=makedeck()
+
+
+# In[4]:
+
+
+card=deck[0]
+
+
+# In[7]:
+
+
+card.rank,card.suit
+
+
 # https://www.pagat.com/eights/crazy8s.html
 
 # In[52]:

@@ -222,6 +222,29 @@ while timer.value<5:
     Wait(.1)
 
 
+# ## Images
+
+# In[ ]:
+
+
+from Robot373 import *
+
+take_picture("my cool pic.jpg")
+
+print('Pausing for a few seconds for another image, but with viewing')
+for i in range(5,0,-1):
+    print(i)
+    Wait(1)
+    
+take_picture("my cool pic2.jpg")
+
+
+# In[ ]:
+
+
+
+
+
 # # Programming pattern -- flags
 
 # It is a common programming pattern to have a true/false (i.e. boolean) variable called a flag that keeps track of an event that toggles.  For example, if you want to have something happen when a button is pressed -- but don't want to do that thing while you're holding the button down, you can use a flag.   Here's an example which prints something when a button is pressed and then again when the button is released.
