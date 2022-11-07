@@ -17,6 +17,17 @@ def state_to_observation(state,player):
     return observation
 
 
+# In[ ]:
+
+
+def show_state(observation):
+    
+    myhand,other_hand=observation
+    
+    print("My hand:",myhand)
+    print("Other hand:",other_hand)    
+
+
 # In[1]:
 
 

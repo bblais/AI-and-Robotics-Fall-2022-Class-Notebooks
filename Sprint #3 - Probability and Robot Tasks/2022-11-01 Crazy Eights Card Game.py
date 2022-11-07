@@ -88,18 +88,6 @@ def state_to_observation(state,player):
     return observation
 
 
-# In[54]:
-
-
-a=[3,5,3,2,5,56,6,7,7,4,3,3]
-
-
-# In[55]:
-
-
-a[-1:-5:-1]
-
-
 # In[56]:
 
 
@@ -241,8 +229,6 @@ random_agent=Agent(random_move)
 
 
 def human_move(observation,player):
-    discard,hand=observation
-    
     moves=valid_moves(observation,player)
     print( "Player ", player)
     print("Moves:")
