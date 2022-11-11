@@ -39,13 +39,13 @@ get_ipython().system('pip install "git+https://github.com/bblais/RobotSim373" --
 
 # ## Sprint #4
 
-# In[1]:
+# In[3]:
 
 
 get_ipython().system('pip install scikit-learn')
 
 
-# In[1]:
+# In[4]:
 
 
 get_ipython().system('pip install "git+https://github.com/bblais/classy" --upgrade')
