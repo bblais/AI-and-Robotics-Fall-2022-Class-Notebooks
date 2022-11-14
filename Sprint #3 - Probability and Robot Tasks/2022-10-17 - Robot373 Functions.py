@@ -239,6 +239,29 @@ for i in range(5,0,-1):
 take_picture("my cool pic2.jpg")
 
 
+# ### What if I want to keep changing the filename to not overwrite the file?
+
+# In[ ]:
+
+
+from Robot373 import *
+import os
+
+count=0
+fname="image_filename%d.jpg" % count
+while os.path.exists(fname):
+    count+=1
+    fname="image_filename%d.jpg" % count
+    
+take_picture(fname)    
+
+
+# In[ ]:
+
+
+
+
+
 # In[ ]:
 
 
