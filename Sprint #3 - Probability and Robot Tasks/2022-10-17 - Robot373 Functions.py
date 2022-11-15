@@ -248,10 +248,10 @@ from Robot373 import *
 import os
 
 count=0
-fname="image_filename%d.jpg" % count
+fname=f"image_filename{count}.jpg"
 while os.path.exists(fname):
     count+=1
-    fname="image_filename%d.jpg" % count
+    fname=f"image_filename{count}.jpg"
     
 take_picture(fname)    
 
