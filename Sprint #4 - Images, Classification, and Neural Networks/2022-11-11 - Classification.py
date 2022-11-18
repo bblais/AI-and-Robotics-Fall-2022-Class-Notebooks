@@ -14,63 +14,63 @@ from pylab import *
 from classy import *
 
 
-# In[11]:
+# In[3]:
 
 
 data=load_excel('data/iris.xls')
 
 
-# In[12]:
+# In[4]:
 
 
 plot2D(data)
 
 
-# In[15]:
+# In[ ]:
 
 
 subset=extract_features(data,[0,1])
 plot2D(subset)
 
 
-# In[56]:
+# In[8]:
 
 
 data_train,data_test=split(data,test_size=0.2)
 
 
-# In[57]:
+# In[9]:
 
 
 C=NaiveBayes()
 
 
-# In[58]:
+# In[10]:
 
 
 C.fit(data_train.vectors,data_train.targets)
 
 
-# In[59]:
+# In[11]:
 
 
 print("On Training Set:",C.percent_correct(data_train.vectors,data_train.targets))
 print("On Test Set:",C.percent_correct(data_test.vectors,data_test.targets))
 
 
-# In[60]:
+# In[12]:
 
 
 C=kNearestNeighbor()
 
 
-# In[61]:
+# In[13]:
 
 
 C.fit(data_train.vectors,data_train.targets)
 
 
-# In[62]:
+# In[14]:
 
 
 print("On Training Set:",C.percent_correct(data_train.vectors,data_train.targets))
@@ -85,25 +85,25 @@ print("On Test Set:",C.percent_correct(data_test.vectors,data_test.targets))
 
 # ## Images
 
-# In[64]:
+# In[59]:
 
 
 images=image.load_images('images/all_pieces/')
 
 
-# In[66]:
+# In[60]:
 
 
 data=image.images_to_vectors(images)
 
 
-# In[67]:
+# In[61]:
 
 
 data_train,data_test=split(data,test_size=0.2)
 
 
-# In[70]:
+# In[62]:
 
 
 C=NaiveBayes()
@@ -112,7 +112,7 @@ print("On Training Set:",C.percent_correct(data_train.vectors,data_train.targets
 print("On Test Set:",C.percent_correct(data_test.vectors,data_test.targets))
 
 
-# In[71]:
+# In[63]:
 
 
 C=kNearestNeighbor()
@@ -121,58 +121,86 @@ print("On Training Set:",C.percent_correct(data_train.vectors,data_train.targets
 print("On Test Set:",C.percent_correct(data_test.vectors,data_test.targets))
 
 
+# ## Predict
+
+# In[64]:
+
+
+test_square=image.load_images('images/square example.png')
+
+
+# In[65]:
+
+
+test_data=image.images_to_vectors(test_square)
+
+
+# In[66]:
+
+
+predictions=C.predict(test_data.vectors)
+category=images.target_names[predictions[0]]
+print(category)
+
+
+# In[69]:
+
+
+imshow(test_square.data[0])
+
+
 # ## visualize
 
-# In[72]:
+# In[20]:
 
 
 C=NaiveBayes()
 C.fit(data_train.vectors,data_train.targets)
 
 
-# In[73]:
+# In[21]:
 
 
 C.means
 
 
-# In[74]:
+# In[22]:
 
 
 C.means.shape
 
 
-# In[75]:
+# In[23]:
 
 
 mean0=C.means[0,:]
 
 
-# In[76]:
+# In[24]:
 
 
 mean0.shape
 
 
-# In[77]:
+# In[25]:
 
 
 im0=mean0.reshape((57,66,4))
 
 
-# In[78]:
+# In[26]:
 
 
 im0.shape
 
 
-# In[81]:
+# In[27]:
 
 
 imshow(im0/im0.max())
 
 
-# In[82]:
+# In[28]:
 
 
 mean1=C.means[1,:]
@@ -181,13 +209,19 @@ im1=im1/im1.max()
 imshow(im1)
 
 
-# In[83]:
+# In[29]:
 
 
 mean1=C.means[2,:]
 im1=mean1.reshape((57,66,4))
 im1=im1/im1.max()
 imshow(im1)
+
+
+# In[ ]:
+
+
+
 
 
 # In[ ]:
