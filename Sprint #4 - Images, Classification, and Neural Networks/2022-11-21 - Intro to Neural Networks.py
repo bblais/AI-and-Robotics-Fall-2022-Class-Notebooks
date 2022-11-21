@@ -1,27 +1,27 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[ ]:
+# In[1]:
 
 
 get_ipython().run_line_magic('matplotlib', 'inline')
 from pylab import *
 
 
-# In[ ]:
+# In[2]:
 
 
 from classy import *
 
 
-# In[ ]:
+# In[3]:
 
 
 data_train=double_moon_data(d=-2,N=1000)
 data_test=double_moon_data(d=-2,N=200)
 
 
-# In[ ]:
+# In[4]:
 
 
 plot2D(data_train)
@@ -29,7 +29,7 @@ plot2D(data_train)
 
 # ## no hidden layer, linear units = Perceptron
 
-# In[ ]:
+# In[6]:
 
 
 C=NumPyNetBackProp({
@@ -41,46 +41,46 @@ C=NumPyNetBackProp({
 # activation functions - linear, tanh (-1 to 1), logistic (0 to 1), relu (min 0, linear)
 
 
-# In[ ]:
+# In[7]:
 
 
 C.fit(data_train.vectors,data_train.targets,epochs=3000)
 
 
-# In[ ]:
+# In[8]:
 
 
 print((C.predict(data_test.vectors)))
-print(("On Training Set:",C.percent_correct(data_train.vectors,data_train.targets)))
+print(("On Train`ing Set:",C.percent_correct(data_train.vectors,data_train.targets)))
 print(("On Test Set:",C.percent_correct(data_test.vectors,data_test.targets)))
 
 
-# In[ ]:
+# In[9]:
 
 
 plot2D(data_test,classifier=C)
 
 
-# In[ ]:
+# In[10]:
 
 
 data=load_excel('data/iris.xls')
 
 
-# In[ ]:
+# In[11]:
 
 
 subset=extract_features(data,[0,1])
 plot2D(subset)
 
 
-# In[ ]:
+# In[13]:
 
 
 data_train,data_test=split(subset,test_size=0.2)
 
 
-# In[ ]:
+# In[14]:
 
 
 C=NumPyNetBackProp({
@@ -92,13 +92,13 @@ C=NumPyNetBackProp({
 # activation functions - linear, tanh (-1 to 1), logistic (0 to 1), relu (min 0, linear)
 
 
-# In[ ]:
+# In[15]:
 
 
 C.fit(data_train.vectors,data_train.targets,epochs=3000)
 
 
-# In[ ]:
+# In[16]:
 
 
 print((C.predict(data_test.vectors)))
@@ -106,7 +106,7 @@ print(("On Training Set:",C.percent_correct(data_train.vectors,data_train.target
 print(("On Test Set:",C.percent_correct(data_test.vectors,data_test.targets)))
 
 
-# In[ ]:
+# In[17]:
 
 
 plot2D(data_test,classifier=C)
@@ -114,7 +114,7 @@ plot2D(data_test,classifier=C)
 
 # ## Backprop with hidden units
 
-# In[ ]:
+# In[18]:
 
 
 data_train=double_moon_data(d=-2,N=1000)
@@ -139,7 +139,7 @@ data_test=double_moon_data(d=-2,N=200)
 
 
 
-# In[ ]:
+# In[19]:
 
 
 C=NumPyNetBackProp({
@@ -150,13 +150,13 @@ C=NumPyNetBackProp({
 })
 
 
-# In[ ]:
+# In[20]:
 
 
 C.fit(data_train.vectors,data_train.targets,epochs=6000)
 
 
-# In[ ]:
+# In[21]:
 
 
 print((C.predict(data_test.vectors)))
@@ -164,7 +164,7 @@ print(("On Training Set:",C.percent_correct(data_train.vectors,data_train.target
 print(("On Test Set:",C.percent_correct(data_test.vectors,data_test.targets)))
 
 
-# In[ ]:
+# In[22]:
 
 
 plot2D(data_test,classifier=C)
