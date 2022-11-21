@@ -68,6 +68,13 @@ def make_training_squares(filefilter,shape,locations=None):
             imsave(newdirname+"/"+newfname,square)
 
 
+# In[4]:
+
+
+im=imread('images/board images/test0.jpg')
+imshow(im)
+
+
 # In[3]:
 
 
