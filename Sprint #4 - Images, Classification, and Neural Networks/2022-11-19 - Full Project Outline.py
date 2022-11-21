@@ -44,7 +44,7 @@ def get_move(state,player):
 
 # Q or skittles, the move comes from the table.
 
-# In[4]:
+# In[3]:
 
 
 def get_move(state,player):
@@ -60,13 +60,13 @@ def get_move(state,player):
         return top_choice(Q[state])
 
 
-# In[5]:
+# In[4]:
 
 
 state=initial_state()
 
 
-# In[6]:
+# In[5]:
 
 
 get_move(state,1)
@@ -76,7 +76,7 @@ get_move(state,1)
 
 # the minimal one just prints the move
 
-# In[7]:
+# In[6]:
 
 
 def make_move(move):
@@ -85,14 +85,14 @@ def make_move(move):
 
 # everything else will be specific to your robot, but it might do something like this.
 
-# In[8]:
+# In[7]:
 
 
 move=[12,8]
 move=[9,6]
 
 
-# In[9]:
+# In[8]:
 
 
 def move_forward(distance):
@@ -119,7 +119,7 @@ def arm_down():
     print("arm down")
 
 
-# In[10]:
+# In[9]:
 
 
 def make_move(move):
@@ -194,7 +194,7 @@ def make_move(move):
     
 
 
-# In[11]:
+# In[10]:
 
 
 state=initial_state()
@@ -202,7 +202,7 @@ show_state(state)
 state.show_locations()
 
 
-# In[12]:
+# In[11]:
 
 
 make_move([13,8])
@@ -212,7 +212,7 @@ make_move([13,8])
 
 # a nice fall-back is to read the state from a file
 
-# In[13]:
+# In[12]:
 
 
 def read_state_from_file(filename='current_board.txt'):
@@ -230,7 +230,7 @@ def read_state_from_file(filename='current_board.txt'):
     return b
 
 
-# In[14]:
+# In[13]:
 
 
 def read_state():
@@ -238,7 +238,7 @@ def read_state():
     return state
 
 
-# In[15]:
+# In[14]:
 
 
 with open("current_board.txt","w") as fid:
@@ -250,7 +250,7 @@ with open("current_board.txt","w") as fid:
     """)
 
 
-# In[16]:
+# In[15]:
 
 
 state=read_state()
@@ -259,7 +259,7 @@ show_state(state)
 
 # now we can do the reading from the world
 
-# In[17]:
+# In[16]:
 
 
 from classy import *
@@ -267,7 +267,7 @@ from classy import *
 
 # Assuming you have collection of training images, train the classifier....
 
-# In[18]:
+# In[17]:
 
 
 def take_picture(fname):
@@ -300,13 +300,13 @@ def get_square(arr,index,shape,locations=None):
     return square
 
 
-# In[21]:
+# In[18]:
 
 
 from pylab import imread,imsave
 
 
-# In[27]:
+# In[21]:
 
 
 def read_state():
@@ -318,7 +318,8 @@ def read_state():
     shape=images.data[0].shape[:2]
     data_train=data=image.images_to_vectors(images,verbose=True)  # train on all of them
 
-    classifier=kNearestNeighbor()
+    #classifier=kNearestNeighbor()
+    classifier=NaiveBayes()
     classifier.fit(data_train.vectors,data_train.targets)
 
 
@@ -372,7 +373,7 @@ def read_state():
     return state
 
 
-# In[28]:
+# In[22]:
 
 
 state=read_state()
@@ -380,7 +381,7 @@ state=read_state()
 
 # ## Now the full game
 
-# In[60]:
+# In[23]:
 
 
 state=read_state()     #  read the state from the world
