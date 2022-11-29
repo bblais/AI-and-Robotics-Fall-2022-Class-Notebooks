@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[3]:
 
 
 get_ipython().run_line_magic('matplotlib', 'inline')
@@ -10,7 +10,7 @@ from pylab import *
 
 # Run this script with your board images, then manually put those images into folders named by the type of piece (see the images/all_pieces folder for an example of this)
 
-# In[2]:
+# In[4]:
 
 
 def make_training_squares(filefilter,shape,locations=None):
@@ -19,7 +19,7 @@ def make_training_squares(filefilter,shape,locations=None):
     import json
     
     if locations is None:
-        with open('locations.json') as json_file:
+        wih open('locations.json') as json_file:
             locations = json.load(json_file)        
     
     fnames=glob(filefilter)
@@ -68,14 +68,14 @@ def make_training_squares(filefilter,shape,locations=None):
             imsave(newdirname+"/"+newfname,square)
 
 
-# In[4]:
+# In[5]:
 
 
 im=imread('images/board images/test0.jpg')
 imshow(im)
 
 
-# In[3]:
+# In[6]:
 
 
 make_training_squares("images/board images/*.jpg",

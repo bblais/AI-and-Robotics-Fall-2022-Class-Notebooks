@@ -1,21 +1,21 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[2]:
+# In[1]:
 
 
 from cv2 import VideoCapture
 import cv2
 
 
-# In[3]:
+# In[2]:
 
 
 get_ipython().run_line_magic('matplotlib', 'inline')
 from pylab import imshow
 
 
-# In[4]:
+# In[36]:
 
 
 cam = VideoCapture(0)
@@ -24,19 +24,13 @@ cam.set(3, 1600)
 cam.set(4, 900)
 
 
-# In[5]:
-
-
-result, image = cam.read()
-
-
-# In[6]:
+# In[33]:
 
 
 result
 
 
-# In[7]:
+# In[ ]:
 
 
 imshow(image)
