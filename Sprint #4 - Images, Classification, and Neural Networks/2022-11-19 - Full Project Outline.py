@@ -171,7 +171,7 @@ def make_move(move):
         turn_robot_right_90()
         move_backward(distance_to_column)
 
-    elif type_of_move==-1:  # right-hand diagonal
+    elif type_of_move==-1:  # left-hand diagonal
         move_forward(distance_to_column)
         turn_robot_left_90()
         move_forward(distance_to_row)

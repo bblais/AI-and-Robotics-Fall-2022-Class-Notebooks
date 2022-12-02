@@ -15,7 +15,7 @@ get_ipython().run_line_magic('matplotlib', 'inline')
 from pylab import imshow
 
 
-# In[36]:
+# In[3]:
 
 
 cam = VideoCapture(0)
@@ -24,24 +24,46 @@ cam.set(3, 1600)
 cam.set(4, 900)
 
 
-# In[33]:
-
-
-result
-
-
-# In[ ]:
-
-
-imshow(image)
-
-
-# In[8]:
+# In[5]:
 
 
 result, image = cam.read()
 image=cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 imshow(image)
+
+
+# In[13]:
+
+
+cam = VideoCapture(2)  # may need to select 0, 1, or 2 for the external camera
+
+
+# In[11]:
+
+
+cam.set(cv2.CAP_PROP_BRIGHTNESS, 1000)
+cam.set(3, 1600)
+cam.set(4, 900)
+
+
+# In[12]:
+
+
+result, image = cam.read()
+image=cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+imshow(image)
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
 
 
 # In[9]:

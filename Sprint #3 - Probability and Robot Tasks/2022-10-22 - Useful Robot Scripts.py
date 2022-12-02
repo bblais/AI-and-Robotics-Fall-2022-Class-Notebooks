@@ -204,6 +204,7 @@ def distance_traveled(position):
     return pi*wheel_diameter_cm*degrees(position)/360
 
 def go_forward(distance):
+    from math import abs
 
     left.reset_position()
     
@@ -212,7 +213,7 @@ def go_forward(distance):
 
 
     try:
-        while distance_traveled(left.position)<distance:  # cm
+        while abs(distance_traveled(left.position))<distance:  # cm
             print("distance traveled so far:",distance_traveled(left.position))
             Wait(0.05)
     except KeyboardInterrupt:
@@ -222,6 +223,28 @@ def go_forward(distance):
     right.power=0
 
 
+def go_backward(distance):
+    from math import abs
+    
+    left.reset_position()
+    
+    left.power=-50
+    right.power=-50
+
+
+    try:
+        while abs(distance_traveled(left.position))<distance:  # cm
+            print("distance traveled so far:",distance_traveled(left.position))
+            Wait(0.05)
+    except KeyboardInterrupt:
+        pass
+
+    left.power=0
+    right.power=0
+    
+    
+    
+    
 def turn_right(degrees):
     left.reset_position()
     
