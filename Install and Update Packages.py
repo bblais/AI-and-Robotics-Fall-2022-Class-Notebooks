@@ -27,6 +27,8 @@ get_ipython().system('pip install "git+https://github.com/bblais/Robot373" --upg
 
 # ## Sprint #3
 
+# (Windows only) Install Putty for pscp:  https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html
+
 # ## Sprint #4
 
 # In[3]:
