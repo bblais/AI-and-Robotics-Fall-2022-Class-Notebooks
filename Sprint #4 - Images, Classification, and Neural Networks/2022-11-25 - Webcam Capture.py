@@ -15,41 +15,43 @@ get_ipython().run_line_magic('matplotlib', 'inline')
 from pylab import imshow
 
 
+# this VideoCapture line might take a bit the first time you run it.
+
+# In[19]:
+
+
+_cam = VideoCapture(0)
+_cam.set(cv2.CAP_PROP_BRIGHTNESS, 1000)
+_cam.set(3, 1600)
+_cam.set(4, 900)
+
+
+# In[21]:
+
+
+result, image = _cam.read()
+image=cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+imshow(image)
+
+
 # In[3]:
 
 
-cam = VideoCapture(0)
-cam.set(cv2.CAP_PROP_BRIGHTNESS, 1000)
-cam.set(3, 1600)
-cam.set(4, 900)
+_cam = VideoCapture(1)  # may need to select 0, 1, or 2 for the external camera
 
 
-# In[5]:
+# In[4]:
 
 
-result, image = cam.read()
-image=cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-imshow(image)
+_cam.set(cv2.CAP_PROP_BRIGHTNESS, 1000)
+_cam.set(3, 1600)
+_cam.set(4, 900)
 
 
-# In[13]:
+# In[6]:
 
 
-cam = VideoCapture(2)  # may need to select 0, 1, or 2 for the external camera
-
-
-# In[11]:
-
-
-cam.set(cv2.CAP_PROP_BRIGHTNESS, 1000)
-cam.set(3, 1600)
-cam.set(4, 900)
-
-
-# In[12]:
-
-
-result, image = cam.read()
+result, image = _cam.read()
 image=cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 imshow(image)
 
@@ -66,7 +68,7 @@ imshow(image)
 
 
 
-# In[9]:
+# In[7]:
 
 
 def take_picture(filename='picture.jpg',view=False):
@@ -78,10 +80,10 @@ def take_picture(filename='picture.jpg',view=False):
     try:
         _cam==None
     except NameError:
-        _cam = VideoCapture(0)
+        _cam = VideoCapture(1)
         
     
-    result, image = cam.read()
+    result, image = _cam.read()
     
     
     if view:
@@ -93,7 +95,7 @@ def take_picture(filename='picture.jpg',view=False):
     
 
 
-# In[12]:
+# In[8]:
 
 
 take_picture(view=True)
@@ -101,29 +103,39 @@ take_picture(view=True)
 
 # ## Copy the file to the robot
 
-# In[48]:
+# In[9]:
 
 
-def scp(local,remote,user_hostname=None,passwd=None):
-    import os
-    assert not passwd is None
-    assert not user_hostname is None
+def scp(local,user_hostname,remote):
+    global passwd_
+    
+    import os,shutil
+    assert os.name=='nt'  # only works on windows
+    assert shutil.which('pscp')
+    
     assert '@' in user_hostname
-    cmd="sshpass -p %s scp -o StrictHostKeyChecking=no '%s' %s:'%s'" % (passwd,local,user_hostname,remote)
-    print(cmd)
-    #os.system(cmd)
+    cmd='pscp -pw "%s" "%s" %s:"%s"' % (passwd_,local,user_hostname,remote)
+    cmd_='pscp -pw "%s" "%s" %s:"%s"' % ('*'*len(passwd_),local,user_hostname,remote)
+    print(cmd_)
+    os.system(cmd)
 
 
-# In[49]:
+# In[10]:
 
 
-scp('picture.jpg','python/picture.jpg','pi@10.2.2.30','whatever the robot password is')
+from getpass import getpass
 
 
-# In[1]:
+# In[7]:
 
 
+passwd_=getpass("Enter password:")
 
+
+# In[10]:
+
+
+scp('picture.jpg','pi@10.2.2.30','python/picture.jpg')
 
 
 # In[ ]:

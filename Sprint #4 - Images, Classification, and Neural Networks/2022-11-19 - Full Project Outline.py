@@ -336,6 +336,7 @@ def read_state():
     # get predictions
     test_data=image.images_to_vectors(test_images)
     predictions=classifier.predict(test_data.vectors)
+    names=[data_train.target_names[p] for p in predictions]
 
     if not os.path.exists('images/predicted'):
         os.mkdir('images/predicted')

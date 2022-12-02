@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[ ]:
+# In[20]:
 
 
 def watch_new_files(dirname,verbose=False):
     import glob
     import os
     import time
+    assert os.path.isdir(dirname)
     
     first_time=True
     old_files=[]
@@ -36,75 +37,35 @@ def watch_new_files(dirname,verbose=False):
             print("done.")
 
 
-# In[ ]:
+# In[21]:
 
 
-def scp(local,remote,user_hostname=None,passwd=None,debug=False):
-    import os
-    assert not passwd is None
-    assert not user_hostname is None
+from getpass import getpass
+def scp(local,user_hostname,remote):
+    global passwd_
+    
+    import os,shutil
+    assert os.name=='nt'  # only works on windows
+    assert shutil.which('pscp')
+    
     assert '@' in user_hostname
-    cmd="sshpass -p %s scp -o StrictHostKeyChecking=no '%s' %s:'%s'" % (passwd,local,user_hostname,remote)
-    print(cmd)
-    if not debug:
-        os.system(cmd)
+    cmd='pscp -pw "%s" "%s" %s:"%s"' % (passwd_,local,user_hostname,remote)
+    cmd_='pscp -pw "%s" "%s" %s:"%s"' % ('*'*len(passwd_),local,user_hostname,remote)
+    print(cmd_)
+    os.system(cmd)
 
 
-# In[ ]:
+# In[23]:
 
 
-def scp(local,remote,user_hostname=None,debug=False):
-    import os
-    assert not passwd is None
-    assert not user_hostname is None
-    assert '@' in user_hostname
-    cmd="scp '%s' %s:'%s'" % (local,user_hostname,remote)
-    print(cmd)
-    if not debug:
-        os.system(cmd)
+passwd_=getpass("Enter password:")  # robot password
 
 
-# In[ ]:
+# In[22]:
 
 
-
-
-
-# In[ ]:
-
-
-for filename in watch_new_files('/Volumes/GoogleDrive/My Drive/Robot_Phone_Pictures',verbose=True):
-    scp(filename,
-        'python/picture.jpg',  # filename on robot
-        'pi@dex.local','password',
-       debug=False)
-
-
-# In[ ]:
-
-
-import subprocess
-command = ["scp", '/Volumes/GoogleDrive/My Drive/Robot_Phone_Pictures/IMG_3591.JPG','pi@dex.local:python/']
-output,error  = subprocess.Popen(
-                command, universal_newlines=True,
-                stdout=subprocess.PIPE,  
-                stderr=subprocess.PIPE).communicate()
-
-
-# In[ ]:
-
-
-output,error
-
-
-# In[ ]:
-
-
-import subprocess
-
-command = ["scp", '/Volumes/GoogleDrive/My Drive/Robot_Phone_Pictures/IMG_3591.JPG','pi@dex.local:python/']
-# Enter "google.com; cat /etc/passwd", without quotes.
-subprocess.run(command, shell=True)
+for filename in watch_new_files('G:/My Drive/Robot_Phone_Pictures',verbose=True):
+    scp(filename,'pi@10.2.2.30','python/picture.jpg')
 
 
 # In[ ]:
