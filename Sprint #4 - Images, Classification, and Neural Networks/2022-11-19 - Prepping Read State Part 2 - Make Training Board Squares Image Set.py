@@ -10,7 +10,7 @@ from pylab import *
 
 # Run this script with your board images, then manually put those images into folders named by the type of piece (see the images/all_pieces folder for an example of this)
 
-# In[3]:
+# In[2]:
 
 
 def make_training_squares(filefilter,shape,locations=None):
@@ -68,18 +68,18 @@ def make_training_squares(filefilter,shape,locations=None):
             imsave(newdirname+"/"+newfname,square)
 
 
-# In[4]:
+# In[3]:
 
 
 im=imread('images/board images/test0.jpg')
 imshow(im)
 
 
-# In[5]:
+# In[4]:
 
 
 make_training_squares("images/board images/*.jpg",
-                      (40,40))
+                      (50,50))
 
 
 # In[ ]:

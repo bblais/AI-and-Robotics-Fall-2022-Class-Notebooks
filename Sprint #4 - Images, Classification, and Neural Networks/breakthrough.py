@@ -56,25 +56,32 @@ def random_move(state,player):
     moves=valid_moves(state,player)
     return random.choice(moves)
 
-def human_move(state,player):
-    print("Locations:")
-    print("    0 | 1 | 2")
-    print("    ---------")
-    print("    3 | 4 | 5")
-    print("    ---------")
-    print("    6 | 7 | 8")
-    
-    while True:
-        
-        move=input('What square do you want to move to?')
-        move=int(move)
 
-        if move in valid_moves(state,player):
-            break
-        else:
-            print("You messed up!")
+def human_move(state,player):
+
+    moves=valid_moves(state,player)
+    print("Locations:")
+    state.show_locations()
     
-    return move
+    print( "Player ", player)
+    print("Moves:")
+    for i, move in enumerate(moves):
+        print(f"\t{i}: {move}")
+        
+    valid_move=False
+    while not valid_move:
+        move_number=int(input('Which move do you want (enter a number)?'))
+
+        if move_number in range(len(moves)):
+            valid_move=True
+        else:
+            print( "Illegal move.")
+
+    
+    return moves[move_number]
+
+
+
 
 human_agent=Agent(human_move)
 random_agent=Agent(random_move)

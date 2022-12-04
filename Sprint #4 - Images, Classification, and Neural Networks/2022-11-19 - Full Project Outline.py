@@ -95,6 +95,21 @@ move=[9,6]
 # In[8]:
 
 
+def take_picture(fname):
+    print("""--- Opening /dev/video0...
+Trying source module v4l2...
+/dev/video0 opened.
+No input was specified, using the first.
+Setting Brightness to 255 (100%).
+Adjusting resolution from 1600x900 to 1600x896.
+--- Capturing frame...
+Captured frame in 0.00 seconds.
+--- Processing captured image...
+Disabling banner.
+Writing JPEG image to '%s'.
+    """ % fname)
+
+
 def move_forward(distance):
     print("forward ",distance)
     
@@ -270,8 +285,6 @@ from classy import *
 # In[17]:
 
 
-def take_picture(fname):
-    pass
 
 def get_square(arr,index,shape,locations=None):
     import json
