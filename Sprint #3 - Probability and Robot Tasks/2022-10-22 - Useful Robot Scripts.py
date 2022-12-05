@@ -269,7 +269,7 @@ def turn_right(degrees):
 go_forward(30)
 Wait(1)
 
-turn_right(degrees)
+turn_right(90)
 Wait(1)
 
 go_forward(40)
