@@ -241,6 +241,39 @@ def read_state_from_file(filename='current_board.txt'):
     return b
 
 
+# In[1]:
+
+
+from Game import Board
+state=Board(3,3,3)
+
+
+# In[6]:
+
+
+def read_3dttt_state_from_file(filename='current_board_3dttt.txt'):
+    with open(filename) as fid:
+        text=fid.read()
+
+    b=Board(3,3,3)
+        
+    board=[int(v) for v in text.strip().split()]
+    b.board=board
+    return b
+
+
+# In[7]:
+
+
+read_3dttt_state_from_file('current_board_3dttt.txt')
+
+
+# In[ ]:
+
+
+
+
+
 # In[14]:
 
 
