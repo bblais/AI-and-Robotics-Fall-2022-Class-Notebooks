@@ -1,11 +1,129 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[19]:
 
 
 get_ipython().run_line_magic('matplotlib', 'inline')
 from pylab import *
+import numpy as np
+import xmlrpc.client
+import pickle
+
+
+# In[7]:
+
+
+def to_string(arr):
+    import json
+    s=json.dumps(arr.tolist())
+    return s
+
+def from_string(s):
+    import json
+    from numpy import array
+    arr=array(json.loads(s))
+    return arr
+
+
+# In[8]:
+
+
+server=xmlrpc.client.ServerProxy('http://10.2.2.30:8080')
+
+
+# In[34]:
+
+
+server.move_forward(5)
+
+
+# In[5]:
+
+
+server.move_backward(5)
+
+
+# In[22]:
+
+
+a=server.take_picture()
+
+
+# In[35]:
+
+
+get_ipython().run_cell_magic('time', '', 'arr=pickle.loads(server.take_picture().data)')
+
+
+# In[36]:
+
+
+imshow(arr)
+
+
+# In[38]:
+
+
+import paramiko
+t = paramiko.Transport(('10.2.2.30', 22))
+t.connect(username='pi', password='robots1234')
+sftp = paramiko.SFTPClient.from_transport(t)
+
+
+# In[39]:
+
+
+get_ipython().run_cell_magic('time', '', "fname='picture.jpg'\nname=server.take_picture2(fname)\nprint(name)\nsftp.get(name,fname)\nim=imread(fname)\nimshow(im)")
+
+
+# In[36]:
+
+
+while True:
+    print(server.position(),end="")
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[10]:
+
+
+
+
+
+# In[11]:
+
+
+imshow(arr)
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
 
 
 # In[2]:
@@ -106,7 +224,7 @@ def make_move(move):
 # In[7]:
 
 
-robot = xmlrpc.client.ServerProxy('http://dex.local:8002')
+robot = xmlrpc.client.ServerProxy('http://dex.local:8080')
 
 move_forward=robot.move_forward
 move_backward=robot.move_backward

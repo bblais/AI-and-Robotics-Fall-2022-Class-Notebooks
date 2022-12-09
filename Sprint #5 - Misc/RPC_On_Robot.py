@@ -25,14 +25,23 @@ class MyXMLRPCServer(SimpleXMLRPCServer):
 
 left,right=Motors("ab")
 
+def take_picture2(filename='picture.jpg',S=10):
+    if BP:
+        a=os.system("fswebcam -s brightness=100%% -r 1600x900 --no-banner -S %d '%s'" % (S,filename))
+        print(a)
+
+    return os.path.abspath(filename)
+
 def take_picture(filename='picture.jpg',view=False,S=10):
     from pylab import imread
+    import pickle
     if BP:
         a=os.system("fswebcam -s brightness=100%% -r 1600x900 --no-banner -S %d '%s'" % (S,filename))
         print(a)
 
     arr=imread(filename)
-    return to_string(arr)
+    return pickle.dumps(arr)    
+
 
 
 def move_forward(arg):
@@ -40,8 +49,23 @@ def move_forward(arg):
     right.power=50
     
     Wait(arg)
+    left.power=0
+    right.power=0
     
+def move_backward(arg):
+    left.power=-50
+    right.power=-50
     
+    Wait(arg)
+    left.power=0
+    right.power=0
+    
+def stop():
+    left.power=0
+    right.power=0
+
+def position():
+    return [left.position,right.position]
 
 
 # Restrict to a particular path.
@@ -49,8 +73,8 @@ class RequestHandler(SimpleXMLRPCRequestHandler):
     rpc_paths = ('/RPC2',)
 
 
-port=8002
-name='localhost'
+port=8080
+name='10.2.2.30'
 # Create server
 
 try:
@@ -62,14 +86,11 @@ try:
 
     server.register_function(move_forward)
     server.register_function(move_backward)
-    server.register_function(turn_robot_left_90)
-    server.register_function(turn_robot_right_90)
-    server.register_function(turn_robot_left_45)
-    server.register_function(turn_robot_right_45)
-    server.register_function(arm_up)
-    server.register_function(arm_down)
+    server.register_function(position)
+    server.register_function(stop)
 
     server.register_function(take_picture)
+    server.register_function(take_picture2)
 
     # Run the server's main loop
     server.serve_forever()
@@ -77,4 +98,5 @@ try:
 except KeyboardInterrupt:
     pass
 
+Shutdown()
 print("done.")
