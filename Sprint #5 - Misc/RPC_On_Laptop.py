@@ -103,7 +103,7 @@ def make_move(move):
         raise ValueError("You can't get there from here.")
 
 
-# In[44]:
+# In[7]:
 
 
 robot = xmlrpc.client.ServerProxy('http://dex.local:8002')
@@ -118,7 +118,7 @@ arm_up=robot.arm_up
 arm_down=robot.arm_down
 
 
-# In[53]:
+# In[8]:
 
 
 robot.move_forward(5)

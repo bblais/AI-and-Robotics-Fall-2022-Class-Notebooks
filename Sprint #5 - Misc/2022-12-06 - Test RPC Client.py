@@ -1,4 +1,5 @@
 import xmlrpc.client
+import ssl
 
 from time import sleep
 
@@ -20,7 +21,8 @@ def take_picture():
     return arr
     
 
-server = xmlrpc.client.ServerProxy('http://localhost:8001')
+context = ssl.SSLContext()
+server=xmlrpc.client.ServerProxy('http://localhost:8001', context=context)    
 
 arr=take_picture()
 print(arr.shape)

@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[6]:
 
 
 get_ipython().run_line_magic('pylab', 'inline')
 
 
-# In[2]:
+# In[7]:
 
 
 def to_string(arr):
@@ -56,14 +56,14 @@ a
 from_string(to_string(a))
 
 
-# In[6]:
+# In[5]:
 
 
 arr=from_string(take_picture())
 imshow(arr)
 
 
-# In[7]:
+# In[5]:
 
 
 from xmlrpc.server import SimpleXMLRPCServer
@@ -74,7 +74,7 @@ class RequestHandler(SimpleXMLRPCRequestHandler):
     rpc_paths = ('/RPC2',)
 
 # Create server
-with SimpleXMLRPCServer(('localhost', 8001),
+with SimpleXMLRPCServer(('localhost', 4001),
                         requestHandler=RequestHandler) as server:
     server.register_introspection_functions()
 
@@ -82,6 +82,37 @@ with SimpleXMLRPCServer(('localhost', 8001),
 
     # Run the server's main loop
     server.serve_forever()
+
+
+# In[1]:
+
+
+from getpass import getpass
+import paramiko
+
+
+# In[2]:
+
+
+ssh_host='localhost'
+ssh_user='bblais'
+ssh_password=getpass('Password:')
+
+
+# In[4]:
+
+
+# establish SSH tunnel
+
+ssh = paramiko.SSHClient()
+ssh.load_system_host_keys()
+ssh.connect(hostname=ssh_host, username=ssh_user, password=ssh_password)
+
+transport = ssh_client.get_transport()
+dest_addr = (remote_host, remote_port)
+local_unique_port = 4000 # any unused local port
+local_host = 'localhost'
+local_addr = (local_host, local_unique_port)
 
 
 # In[ ]:

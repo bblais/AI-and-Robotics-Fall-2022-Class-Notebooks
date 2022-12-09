@@ -109,7 +109,7 @@ ssh.close()
 
 
 
-# In[8]:
+# In[11]:
 
 
 import paramiko
@@ -140,16 +140,24 @@ stdin.write("exit"+"\n")
 ssh.close()
 
 
-# In[9]:
+# In[12]:
 
 
-transport = ssh.get_transport()
+import paramiko
+from getpass import getpass
+
+# Set the hostname, username, and password for the Raspberry Pi
+HOSTNAME = "dex.local"
+USERNAME = "pi"
+PASSWORD=getpass("Enter password:")  # robot password
+# Create an SSH client
+ssh = paramiko.SSHClient()
 
 
 # In[10]:
 
 
-ssh.exec_command("python3 python/blah.py")
+
 
 
 # In[ ]:
