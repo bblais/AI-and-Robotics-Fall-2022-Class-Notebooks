@@ -145,6 +145,36 @@ def get_move(state,player):
     return top_choice(moves,values)
 
 
+# you can also do random agent with win checking
+
+# In[ ]:
+
+
+def get_move(state,player):
+    
+    if player==1:
+        other_player=2
+    else:
+        other_player=1
+    
+    # check for easy win, which should get rewarded later
+    winning_move=easy_win(state,player)
+    if not winning_move is None:
+        move=winning_move
+        return move
+    else:
+        # for TTT and connect4 the moves are symmetrical between the players
+        # so you can look to block easy wins for the other player
+        # this wont work for any other game.
+        blocking_move=easy_win(state,other_player)
+        if not blocking_move is None:
+            move=blocking_move
+            return move
+    
+    moves=valid_moves(state,player)
+    return random.choice(moves)
+
+
 # ## Make Move
 
 # In[3]:
