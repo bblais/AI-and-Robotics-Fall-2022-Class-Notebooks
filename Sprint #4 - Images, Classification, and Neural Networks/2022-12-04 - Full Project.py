@@ -12,6 +12,8 @@ from pylab import imread,imsave
 
 # ## Agent
 
+# Use this for the Q agent:
+
 # In[2]:
 
 
