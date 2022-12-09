@@ -35,36 +35,44 @@ def take_picture(filename='picture.jpg',view=False,S=10):
     return to_string(arr)
 
 
+def move_forward(arg):
+    left.power=50
+    right.power=50
+    
+    Wait(arg)
+    
+    
+
 
 # Restrict to a particular path.
 class RequestHandler(SimpleXMLRPCRequestHandler):
     rpc_paths = ('/RPC2',)
 
 
-port=8001
+port=8002
 name='localhost'
 # Create server
 
 try:
-    with MyXMLRPCServer((name,port),
-                            requestHandler=RequestHandler,allow_none=True) as server:
+    server=MyXMLRPCServer((name,port),
+                            requestHandler=RequestHandler,allow_none=True)
 
-        print("Starting server...",name,port,"...")
-        server.register_introspection_functions()
+    print("Starting server...",name,port,"...")
+    server.register_introspection_functions()
 
-        server.register_function(move_forward)
-        server.register_function(move_backward)
-        server.register_function(turn_robot_left_90)
-        server.register_function(turn_robot_right_90)
-        server.register_function(turn_robot_left_45)
-        server.register_function(turn_robot_right_45)
-        server.register_function(arm_up)
-        server.register_function(arm_down)
+    server.register_function(move_forward)
+    server.register_function(move_backward)
+    server.register_function(turn_robot_left_90)
+    server.register_function(turn_robot_right_90)
+    server.register_function(turn_robot_left_45)
+    server.register_function(turn_robot_right_45)
+    server.register_function(arm_up)
+    server.register_function(arm_down)
 
-        server.register_function(take_picture)
+    server.register_function(take_picture)
 
-        # Run the server's main loop
-        server.serve_forever()
+    # Run the server's main loop
+    server.serve_forever()
 
 except KeyboardInterrupt:
     pass

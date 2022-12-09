@@ -28,6 +28,28 @@ def get_move(state,player):
         return top_choice(Q[state])
 
 
+# Use this for mcts agent
+
+# In[1]:
+
+
+def get_move(state,player):
+    from copy import deepcopy
+    T=LoadTable("mcts_data_TTT.json")
+    moves=valid_moves(state,player)
+    available_states=[update_state(deepcopy(state),player,move)
+                                    for move in moves] 
+    
+    for S in available_states:
+        if (S,player) not in T:
+            T[(S,player)]={'wins':0,'plays':1}
+
+    values=[float(T[(S,player)]['wins'])/T[(S,player)]['plays'] for S in available_states]
+    values,moves=mysort(values,moves,reverse=True)
+    
+    return top_choice(moves,values)
+
+
 # ## Make Move
 
 # In[3]:
