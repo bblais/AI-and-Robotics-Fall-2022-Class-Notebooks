@@ -52,6 +52,99 @@ def get_move(state,player):
     return top_choice(moves,values)
 
 
+# if you want it with easy_win checking, do:
+
+# In[ ]:
+
+
+def easy_win(state,player):
+    from copy import deepcopy
+    moves=valid_moves(state,player)
+    for move in moves:
+        new_state=update_state(deepcopy(state),player,move)
+        if win_status(new_state,player)=='win':
+            return move
+    
+    return None
+
+
+def get_move(state,player):
+    
+    if player==1:
+        other_player=2
+    else:
+        other_player=1
+    
+    # check for easy win, which should get rewarded later
+    winning_move=easy_win(state,player)
+    if not winning_move is None:
+        move=winning_move
+        return move
+    else:
+        # for TTT and connect4 the moves are symmetrical between the players
+        # so you can look to block easy wins for the other player
+        # this wont work for any other game.
+        blocking_move=easy_win(state,other_player)
+        if not blocking_move is None:
+            move=blocking_move
+            return move
+    
+    
+    if player==1:
+        Q=LoadTable("Q1_breakthrough_table.json")
+    else:
+        Q=LoadTable("Q2_breakthrough_table.json")
+        
+    
+    if state not in Q:
+        return random_move(state,player)  # this is defined in my game functions import
+    else:
+        return top_choice(Q[state])
+
+
+# or for mcts with easy_win checking
+
+# In[ ]:
+
+
+def get_move(state,player):
+    from copy import deepcopy
+    
+    if player==1:
+        other_player=2
+    else:
+        other_player=1
+    
+    # check for easy win, which should get rewarded later
+    winning_move=easy_win(state,player)
+    if not winning_move is None:
+        move=winning_move
+        return move
+    else:
+        # for TTT and connect4 the moves are symmetrical between the players
+        # so you can look to block easy wins for the other player
+        # this wont work for any other game.
+        blocking_move=easy_win(state,other_player)
+        if not blocking_move is None:
+            move=blocking_move
+            return move
+    
+    
+    T=LoadTable("mcts_data_TTT.json")
+    moves=valid_moves(state,player)
+    available_states=[update_state(deepcopy(state),player,move)
+                                    for move in moves] 
+    
+    for S in available_states:
+        if (S,player) not in T:
+            T[(S,player)]={'wins':0,'plays':1}
+
+    values=[float(T[(S,player)]['wins'])/T[(S,player)]['plays'] for S in available_states]
+    values,moves=mysort(values,moves,reverse=True)
+    
+    return top_choice(moves,values)
+
+
 # ## Make Move
 
 # In[3]:
